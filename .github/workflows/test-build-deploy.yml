@@ -23,7 +23,7 @@ jobs:
     uses: sterling-retailcore-team/workflow-templates/.github/workflows/code_quality.yml@main
     secrets: inherit
     with:
-      CODE_COVERAGE: '' # specify codebase for code coverage. e.g CODE_COVERAGE: 'node' CODE_COVERAGE: 'dotnet' or CODE_COVERAGE: 'python', e.t.c
+      CODE_COVERAGE: 'dotnet' # specify codebase for code coverage. e.g CODE_COVERAGE: 'node' CODE_COVERAGE: 'dotnet' or CODE_COVERAGE: 'python', e.t.c
   build_image:
     uses: sterling-retailcore-team/workflow-templates/.github/workflows/build.yml@main
     needs: [code_quality]
