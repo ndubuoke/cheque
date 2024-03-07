@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using ChequeMicroservice.Application.Cheques.CreateCheques;
 using ChequeMicroservice.Application.Cheques.ApproveorRejectChequeRequests;
 using ChequeMicroservice.Application.Common.Models;
+using ChequeMicroservice.Application.Cheques.Queries;
 
 namespace API.Controllers
 {
@@ -52,6 +53,29 @@ namespace API.Controllers
             command.AccessToken = accessToken;
             Result approveOrRejectResponse = await Mediator.Send(command);
             return Ok(approveOrRejectResponse);
+        }
+
+        /// <summary>
+        /// This api retrieves a single cheque
+        /// </summary>
+        /// <param name="chequeId">The cheque Id</param>
+        /// <returns>Returns the Result object either success/failure</returns>
+        [HttpGet("getchequebyid/{chequeId}")]
+        public async Task<ActionResult> GetChequeById(int chequeId)
+        {
+            Result result = await Mediator.Send(new GetChequeByIdQuery { ChequeId = chequeId });
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// This api retrieves all cheques
+        /// </summary>
+        /// <returns>Returns the Result object either success/failure</returns>
+        [HttpGet("getchequelist")]
+        public async Task<ActionResult> GetChequeList()
+        {
+            Result result = await Mediator.Send(new GetAllChequesQuery());
+            return Ok(result);
         }
     }
 }

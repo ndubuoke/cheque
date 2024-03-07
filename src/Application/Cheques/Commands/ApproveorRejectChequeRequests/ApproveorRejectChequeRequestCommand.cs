@@ -1,12 +1,9 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using ChequeMicroservice.Application.Common.Interfaces;
 using ChequeMicroservice.Application.Common.Models;
 using ChequeMicroservice.Domain.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ChequeMicroservice.Domain.Entities;
