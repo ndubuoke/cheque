@@ -1,15 +1,13 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using ChequeMicroservice.Application.Common.Interfaces;
 using ChequeMicroservice.Application.Common.Models;
 using ChequeMicroservice.Domain.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ChequeMicroservice.Domain.Entities;
+using ChequeMicroservice.Application.ChequeLeaves.Commands;
 
 namespace ChequeMicroservice.Application.Cheques.CreateCheques
 {
@@ -41,7 +39,13 @@ namespace ChequeMicroservice.Application.Cheques.CreateCheques
                     return Result.Failure<CreateChequeCommand>("Cheque already exists");
                 }
 
-                //TODO: Create Cheque Leaves
+                await new CreateChequeLeavesCommandHandler(_context).Handle(new CreateChequeLeavesCommand 
+                { 
+                    ChequeId = cheque.Id, 
+                    UserId = request.UserId,
+                    Cheque = cheque
+                }, cancellationToken);
+
                 cheque.ChequeStatus = ChequeStatus.Approved;
                 cheque.ObjectCategory= ObjectCategory.Record;
                 cheque.LastModifiedDate = DateTime.UtcNow;

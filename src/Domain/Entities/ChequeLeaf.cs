@@ -1,8 +1,6 @@
 ﻿using ChequeMicroservice.Domain.Common;
 using ChequeMicroservice.Domain.Enums;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ChequeMicroservice.Domain.Entities
 {

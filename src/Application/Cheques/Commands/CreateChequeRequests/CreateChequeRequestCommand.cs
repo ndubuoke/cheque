@@ -1,12 +1,9 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using ChequeMicroservice.Application.Common.Interfaces;
 using ChequeMicroservice.Application.Common.Models;
 using ChequeMicroservice.Domain.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ChequeMicroservice.Domain.Entities;
@@ -33,6 +30,11 @@ namespace ChequeMicroservice.Application.Cheques.CreateCheques
         {
             try
             {
+                Cheque existingCheck = await _context.Cheques.FirstOrDefaultAsync(c => c.Status == Status.Active);
+                if (existingCheck != null)
+                {
+                    return Result.Failure<CreateChequeRequestCommand>("An active check already exist");
+                }
                 await _context.BeginTransactionAsync();
                 Cheque cheque = await _context.Cheques.FirstOrDefaultAsync(a => a.SeriesStartingNumber == request.SeriesStartingNumber || a.SeriesEndingNumber == request.SeriesEndingNumber);
                 if (cheque != null)
