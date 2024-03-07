@@ -6,6 +6,7 @@ using ChequeMicroservice.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,10 +20,22 @@ namespace ChequeMicroservice.Infrastructure.Persistence
     public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         private IDbContextTransaction _currentTransaction;
+        private IConfiguration _configuration;
 
         public ApplicationDbContext(
             DbContextOptions options) : base(options)
         {
+        }
+
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                string connectionString = _configuration.GetConnectionString("PostgreSQLConnection");
+
+                optionsBuilder.UseNpgsql(connectionString);
+            }
         }
 
         public DbSet<AuditTrail> AuditTrails { get; set; }

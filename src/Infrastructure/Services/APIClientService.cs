@@ -72,7 +72,7 @@ namespace ChequeMicroservice.Infrastructure.Services
         {
             try
             {
-                RestRequest restRequest = new RestRequest(apiUrl, Method.GET);
+                RestRequest restRequest = new RestRequest(apiUrl, Method.Get);
                 if (!string.IsNullOrEmpty(apiKey))
                 {
                     restRequest.AddHeader("Accept", "application/json");
@@ -80,7 +80,7 @@ namespace ChequeMicroservice.Infrastructure.Services
                 }
 
                 ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
-                IRestResponse restResponse = await _client.ExecuteAsync(restRequest);
+                RestResponse restResponse = await _client.ExecuteAsync(restRequest);
                 string responseContent = restResponse.Content;
                 return responseContent;
             }
@@ -95,14 +95,14 @@ namespace ChequeMicroservice.Infrastructure.Services
             try
             {
                 RestClient client = new RestClient(apiUrl);
-                RestRequest restRequest = new RestRequest(apiUrl, Method.POST);
+                RestRequest restRequest = new RestRequest(apiUrl, Method.Post);
                 if (!string.IsNullOrEmpty(apiKey))
                 {
                     restRequest.AddHeader("Accept", "application/json");
                     restRequest.AddHeader("Authorization", "Bearer " + apiKey);
                 }
                 restRequest.AddJsonBody(requestObject);
-                IRestResponse restResponse = await client.ExecuteAsync(restRequest);
+                RestResponse restResponse = await client.ExecuteAsync(restRequest);
                 string responseContent = restResponse.Content;
                 return responseContent;
             }
@@ -117,7 +117,7 @@ namespace ChequeMicroservice.Infrastructure.Services
         {
             try
             {
-                RestRequest restRequest = new RestRequest(request.ApiUrl, Method.POST) { Timeout = 300000 };
+                RestRequest restRequest = new RestRequest(request.ApiUrl, Method.Post) { Timeout = 300000 };
                 restRequest.AddHeader("Content-Type", "application/json");
                 if (!string.IsNullOrEmpty(request.ApiKey))
                 {
@@ -132,7 +132,7 @@ namespace ChequeMicroservice.Infrastructure.Services
                     }
                 }
                 restRequest.AddJsonBody(request.requestObject);
-                IRestResponse<T> restResponse = await _client.ExecuteAsync<T>(restRequest);
+                RestResponse<T> restResponse = await _client.ExecuteAsync<T>(restRequest);
                 if (restResponse.Data == null)
                 {
                     _logger.LogError($"An error occured. Error code: {restResponse.StatusCode}", JsonConvert.SerializeObject(restResponse.Content));
@@ -156,14 +156,14 @@ namespace ChequeMicroservice.Infrastructure.Services
             try
             {
                 RestClient client = new RestClient(apiUrl);
-                RestRequest restRequest = new RestRequest(apiUrl, Method.POST);
+                RestRequest restRequest = new RestRequest(apiUrl, Method.Post);
                 if (!string.IsNullOrEmpty(apiKey))
                 {
                     restRequest.AddHeader("Accept", "application/json");
                     restRequest.AddHeader("Authorization", "Bearer " + apiKey);
                 }
                 restRequest.AddJsonBody(requestObject);
-                IRestResponse restResponse = await client.ExecuteAsync(restRequest);
+                RestResponse restResponse = await client.ExecuteAsync(restRequest);
                 string responseContent = restResponse.Content;
                 Result resp = JsonDeserialize<Result>(responseContent);
                 return resp;

@@ -1,5 +1,4 @@
-﻿using MassTransit;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -54,7 +53,6 @@ namespace ChequeMicroservice.Infrastructure
             services.AddTransient<IAPIClientService, APIClientService>();
             services.AddTransient<IRestClient, RestClient>();
             services.AddTransient<INotificationService, NotificationService>();
-            services.AddScoped<IQueueMessagingService, QueueMessagingService>();
             return services;
         }
 

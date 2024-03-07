@@ -18,6 +18,7 @@ namespace ChequeMicroservice.Application.Cheques.CreateCheques
         public DateTime IssueDate { get; set; }
         public string SeriesStartingNumber { get; set; }
         public string SeriesEndingNumber { get; set; }
+        public int NumberOfChequeLeaf { get; set; }
         public string UserId { get; set; }
     }
 
@@ -60,6 +61,7 @@ namespace ChequeMicroservice.Application.Cheques.CreateCheques
                     SeriesEndingNumber = request.SeriesEndingNumber,
                     SeriesStartingNumber = request.SeriesStartingNumber,
                     IssueDate = request.IssueDate,
+                    NumberOfChequeLeaf = request.NumberOfChequeLeaf,
                     Status = Status.Active,
                     StatusDesc = Status.Active.ToString().ToString(),
                     EntityId = "",//Get this from user id, we need a method to fetch user details and permissions

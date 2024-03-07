@@ -10,10 +10,7 @@ using Microsoft.OpenApi.Models;
 using ChequeMicroservice.Application;
 using ChequeMicroservice.Infrastructure;
 using ChequeMicroservice.Infrastructure.Persistence;
-using Google.Apis.Auth.AspNetCore3;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using ChequeMicroservice.Infrastructure.Services;
-using API.Filters;
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace API
 {

@@ -23,8 +23,8 @@ namespace API
         public async static Task Main(string[] args)
         {
             IConfigurationRoot config = new ConfigurationBuilder()
-			.AddJsonFile("appsettings.json", optional: false)
-			.Build();
+            .AddJsonFile("appsettings.json", optional: false)
+            .Build();
 
 			Log.Logger = new LoggerConfiguration().MinimumLevel.Override("Microsoft", LogEventLevel.Information)
 						.Enrich.FromLogContext().Enrich.WithProperty("applicationName", "SeaBass")
