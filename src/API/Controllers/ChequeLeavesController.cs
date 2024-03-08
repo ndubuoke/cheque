@@ -34,7 +34,7 @@ namespace API.Controllers
         /// <param name="leafnumber">Leaf number to stop a single cheque leaf</param>
         /// <returns>Returns the Result object either success/failure</returns>
         [HttpPost("stopchequeleaf/{leafnumber}")]
-        public async Task<ActionResult> StopChequeLeaf(long leafnumber)
+        public async Task<ActionResult> StopChequeLeaf(string leafnumber)
         {
             Result result = await Mediator.Send(new StopChequeLeafCommand { LeafNumber = leafnumber });
             return Ok(result);
@@ -58,7 +58,7 @@ namespace API.Controllers
         /// <param name="leafNumber">The cheque leaf number</param>
         /// <returns>Returns the Result object either success/failure</returns>
         [HttpGet("confirmchequeleaf/{leafNumber}")]
-        public async Task<ActionResult> ConfirmChequeLeaf(long leafNumber)
+        public async Task<ActionResult> ConfirmChequeLeaf(string leafNumber)
         {
             Result checkLeavesRetrievalResult = await Mediator.Send(new ConfirmChequeLeafQuery { LeafNumber = leafNumber });
             return Ok(checkLeavesRetrievalResult);

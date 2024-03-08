@@ -10,7 +10,7 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Commands
 {
     public class StopChequeLeafCommand : IRequest<Result>
     {
-        public decimal LeafNumber { get; set; }
+        public string LeafNumber { get; set; }
     }
 
     public class StopChequeLeafCommandHandler : IRequestHandler<StopChequeLeafCommand, Result>

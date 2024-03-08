@@ -52,7 +52,7 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Commands
                 {
                     chequeLeaves.Add(new ChequeLeaf
                     {
-                        LeafNumber = i,
+                        LeafNumber = i.ToString(),
                         ChequeId = cheque.Id,
                         ChequeLeafStatus = ChequeLeafStatus.Available,
                         Status = Status.Active,
