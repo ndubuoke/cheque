@@ -8,7 +8,7 @@ namespace ChequeMicroservice.Domain.Entities
     {
         public int ChequeId { get; set; }
         public Guid ChequeLeafId { get; set; }
-        public string LeafNumber { get; set; }
+        public long LeafNumber { get; set; }
         public ChequeLeafStatus ChequeLeafStatus { get; set; }
         public string ChequeLeafStatusDesc { get; set; }
     }

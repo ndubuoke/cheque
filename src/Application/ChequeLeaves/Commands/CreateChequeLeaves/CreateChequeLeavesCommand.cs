@@ -48,11 +48,11 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Commands
                     return Result.Failure<CreateChequeLeavesCommand>("An error occured while trying to create cheque leaves. Series not in appropriate order");
                 }
 
-                for (long i = chequeStartingSeriesValue; i <= chequeEndingSeriesValue; i++)
+                for (long leafNumber = chequeStartingSeriesValue; leafNumber <= chequeEndingSeriesValue; leafNumber++)
                 {
                     chequeLeaves.Add(new ChequeLeaf
                     {
-                        LeafNumber = i,
+                        LeafNumber = leafNumber,
                         ChequeId = cheque.Id,
                         ChequeLeafStatus = ChequeLeafStatus.Available,
                         Status = Status.Active,
