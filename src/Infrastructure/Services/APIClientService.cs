@@ -37,8 +37,6 @@ namespace ChequeMicroservice.Infrastructure.Services
                     restRequest.AddHeader("Accept", "application/json");
                     restRequest.AddHeader("Authorization", "Bearer " + apiKey);
                 }
-                ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
-
                 T response = await _client.GetAsync<T>(restRequest); 
                 return response;
             }
@@ -78,8 +76,6 @@ namespace ChequeMicroservice.Infrastructure.Services
                     restRequest.AddHeader("Accept", "application/json");
                     restRequest.AddHeader("Authorization", "Bearer " + apiKey);
                 }
-
-                ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
                 RestResponse restResponse = await _client.ExecuteAsync(restRequest);
                 string responseContent = restResponse.Content;
                 return responseContent;
@@ -144,34 +140,6 @@ namespace ChequeMicroservice.Infrastructure.Services
                 throw ex;
             }
         }
-
-        public T JsonDeserialize<T>(string json)
-        {
-            T obj = Activator.CreateInstance<T>();
-            obj = JsonConvert.DeserializeObject<T>(json);
-            return obj;
-        }
-        public async Task<Result> JsonPost(string apiUrl, string apiKey, object requestObject, bool isFormData = false)
-        {
-            try
-            {
-                RestClient client = new RestClient(apiUrl);
-                RestRequest restRequest = new RestRequest(apiUrl, Method.Post);
-                if (!string.IsNullOrEmpty(apiKey))
-                {
-                    restRequest.AddHeader("Accept", "application/json");
-                    restRequest.AddHeader("Authorization", "Bearer " + apiKey);
-                }
-                restRequest.AddJsonBody(requestObject);
-                RestResponse restResponse = await client.ExecuteAsync(restRequest);
-                string responseContent = restResponse.Content;
-                Result resp = JsonDeserialize<Result>(responseContent);
-                return resp;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+    
     }
 }

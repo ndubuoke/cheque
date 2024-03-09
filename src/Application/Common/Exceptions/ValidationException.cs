@@ -36,7 +36,7 @@ namespace ChequeMicroservice.Application.Common.Exceptions
             string errors = null;
             try
             {
-                if (Errors?.Count() > 0)
+                if (Errors.Any())
                 {
                     StringBuilder stringBuilder = new StringBuilder();
                     foreach (KeyValuePair<string, string[]> error in Errors)
@@ -44,7 +44,7 @@ namespace ChequeMicroservice.Application.Common.Exceptions
                         stringBuilder.AppendFormat(",", error);
                     }
                 }
-                return errors.TrimEnd(';');
+                return errors?.TrimEnd(';');
             }
             catch (Exception ex) { return errors; }
         }
