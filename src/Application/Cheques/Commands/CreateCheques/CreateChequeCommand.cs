@@ -26,40 +26,30 @@ namespace ChequeMicroservice.Application.Cheques.CreateCheques
         }
         public async Task<Result> Handle(CreateChequeCommand request, CancellationToken cancellationToken)
         {
-            try
+            Cheque cheque = await _context.Cheques.FirstOrDefaultAsync(a => a.Id == request.ChequeId, cancellationToken);
+            if (cheque == null)
             {
-                await _context.BeginTransactionAsync();
-                Cheque cheque = await _context.Cheques.FirstOrDefaultAsync(a => a.Id == request.ChequeId, cancellationToken);
-                if (cheque == null)
-                {
-                    return Result.Failure("Invalid cheque id");
-                }
-                if (cheque.ObjectCategory == ObjectCategory.Record)
-                {
-                    return Result.Failure("Cheque already exists");
-                }
-
-                await new CreateChequeLeavesCommandHandler(_context).Handle(new CreateChequeLeavesCommand 
-                { 
-                    ChequeId = cheque.Id, 
-                    UserId = request.UserId,
-                    Cheque = cheque
-                }, cancellationToken);
-
-                cheque.ChequeStatus = ChequeStatus.Approved;
-                cheque.ObjectCategory= ObjectCategory.Record;
-                cheque.LastModifiedDate = DateTime.UtcNow;
-                cheque.LastModifiedBy = request.UserId;
-                _context.Cheques.Update(cheque);
-                await _context.SaveChangesAsync(cancellationToken);
-                await _context.CommitTransactionAsync();
-                return Result.Success("Cheque created successfully", cheque);
+                return Result.Failure("Invalid cheque id");
             }
-            catch (Exception)
+            if (cheque.ObjectCategory == ObjectCategory.Record)
             {
-                _context.RollbackTransaction();
-                throw;
+                return Result.Failure("Cheque already exists");
             }
+
+            await new CreateChequeLeavesCommandHandler(_context).Handle(new CreateChequeLeavesCommand
+            {
+                ChequeId = cheque.Id,
+                UserId = request.UserId,
+                Cheque = cheque
+            }, cancellationToken);
+
+            cheque.ChequeStatus = ChequeStatus.Approved;
+            cheque.ObjectCategory = ObjectCategory.Record;
+            cheque.LastModifiedDate = DateTime.UtcNow;
+            cheque.LastModifiedBy = request.UserId;
+            _context.Cheques.Update(cheque);
+            await _context.SaveChangesAsync(cancellationToken);
+            return Result.Success("Cheque created successfully", cheque);
         }
     }
 }

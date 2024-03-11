@@ -29,49 +29,39 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Commands
         }
         public async Task<Result> Handle(CreateChequeLeavesCommand request, CancellationToken cancellationToken)
         {
-            try
+            Cheque cheque = request.Cheque != null ? request.Cheque : await _context.Cheques.FirstOrDefaultAsync(a => a.Id == request.ChequeId, cancellationToken);
+
+            List<ChequeLeaf> chequeLeaves = new List<ChequeLeaf>();
+
+            bool isStartingSeriesNumber = long.TryParse(cheque.SeriesStartingNumber, out long chequeStartingSeriesValue);
+            bool isEndingSeriesNumber = long.TryParse(cheque.SeriesEndingNumber, out long chequeEndingSeriesValue);
+
+            if (!isEndingSeriesNumber || !isStartingSeriesNumber)
             {
-                await _context.BeginTransactionAsync();
-                Cheque cheque = request.Cheque != null ? request.Cheque : await _context.Cheques.FirstOrDefaultAsync(a => a.Id == request.ChequeId, cancellationToken);
-
-                List<ChequeLeaf> chequeLeaves = new List<ChequeLeaf>();
-
-                bool isStartingSeriesNumber = long.TryParse(cheque.SeriesStartingNumber, out long chequeStartingSeriesValue);
-                bool isEndingSeriesNumber = long.TryParse(cheque.SeriesEndingNumber, out long chequeEndingSeriesValue);
-
-                if (!isEndingSeriesNumber || !isStartingSeriesNumber)
-                {
-                    return Result.Failure("An error occured while trying to create cheque leaves");
-                }
-                if (chequeStartingSeriesValue > chequeEndingSeriesValue)
-                {
-                    return Result.Failure("An error occured while trying to create cheque leaves. Series not in appropriate order");
-                }
-
-                for (long leafNumber = chequeStartingSeriesValue; leafNumber <= chequeEndingSeriesValue; leafNumber++)
-                {
-                    chequeLeaves.Add(new ChequeLeaf
-                    {
-                        LeafNumber = leafNumber.ToString(),
-                        ChequeId = cheque.Id,
-                        ChequeLeafStatus = ChequeLeafStatus.Available,
-                        Status = Status.Active,
-                        StatusDesc = Status.Active.ToString(),
-                        CreatedDate = DateTime.UtcNow,
-                        CreatedBy = request.UserId
-                    });
-                }
-
-                await _context.ChequeLeaves.AddRangeAsync(chequeLeaves, cancellationToken);
-                await _context.SaveChangesAsync(cancellationToken);
-                await _context.CommitTransactionAsync();
-                return Result.Success("Cheque leaves created successfully", chequeLeaves);
+                return Result.Failure("An error occured while trying to create cheque leaves");
             }
-            catch (Exception)
+            if (chequeStartingSeriesValue > chequeEndingSeriesValue)
             {
-                _context.RollbackTransaction();
-                throw;
+                return Result.Failure("An error occured while trying to create cheque leaves. Series not in appropriate order");
             }
+
+            for (long leafNumber = chequeStartingSeriesValue; leafNumber <= chequeEndingSeriesValue; leafNumber++)
+            {
+                chequeLeaves.Add(new ChequeLeaf
+                {
+                    LeafNumber = leafNumber.ToString(),
+                    ChequeId = cheque.Id,
+                    ChequeLeafStatus = ChequeLeafStatus.Available,
+                    Status = Status.Active,
+                    StatusDesc = Status.Active.ToString(),
+                    CreatedDate = DateTime.UtcNow,
+                    CreatedBy = request.UserId
+                });
+            }
+
+            await _context.ChequeLeaves.AddRangeAsync(chequeLeaves, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+            return Result.Success("Cheque leaves created successfully", chequeLeaves);
         }
     }
 }
