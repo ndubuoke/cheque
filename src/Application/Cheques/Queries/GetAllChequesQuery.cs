@@ -24,7 +24,7 @@ namespace ChequeMicroservice.Application.Cheques.Queries
         public async Task<Result> Handle(GetAllChequesQuery request, CancellationToken cancellationToken)
         {
             List<Cheque> cheques = await _context.Cheques.ToListAsync(cancellationToken);
-            if (!cheques.Any())
+            if (cheques == null || cheques.Count == 0)
             {
                 return Result.Failure("No cheque records found");
             }

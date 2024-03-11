@@ -12,18 +12,17 @@ using System.IO;
 using System.Text;
 using Microsoft.Extensions.Logging;
 using Azure;
+using Serilog;
 
 namespace ChequeMicroservice.Infrastructure.Services
 {
     public class ApiClientService : IApiClientService
     {
         private readonly IRestClient _client;
-        private readonly ILogger<ApiClientService> _logger;
 
-        public ApiClientService(IRestClient client, ILogger<ApiClientService> logger)
+        public ApiClientService(IRestClient client)
         {
             _client = client;
-            _logger = logger;
         }
 
        
@@ -60,8 +59,7 @@ namespace ChequeMicroservice.Infrastructure.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(
-                    ex.Message, "Exception occurred: {Message}", ex.InnerException?.Message);
+                Log.Error(ex.Message, "Exception occurred: {Message}", ex.InnerException?.Message);
                 throw;
             }
         }
@@ -83,8 +81,7 @@ namespace ChequeMicroservice.Infrastructure.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(
-                    ex.Message, "Exception occurred: {Message}", ex.InnerException?.Message);
+                Log.Error(ex.Message, "Exception occurred: {Message}", ex.InnerException?.Message);
                 throw;
             }
         }
@@ -107,8 +104,7 @@ namespace ChequeMicroservice.Infrastructure.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(
-                  ex.Message, "Exception occurred: {Message}", ex.InnerException?.Message);
+                Log.Error( ex.Message, "Exception occurred: {Message}", ex.InnerException?.Message);
                 throw;
             }
         }
@@ -136,14 +132,13 @@ namespace ChequeMicroservice.Infrastructure.Services
                 RestResponse<T> restResponse = await _client.ExecuteAsync<T>(restRequest);
                 if (restResponse.Data == null)
                 {
-                    _logger.LogError($"An error occured. Error code: {restResponse.StatusCode}", JsonConvert.SerializeObject(restResponse.Content));
+                    Log.Error($"An error occured. Error code: {restResponse.StatusCode}", JsonConvert.SerializeObject(restResponse.Content));
                 }
                 return restResponse.Data;
             }
             catch (Exception ex)
             {
-                _logger.LogError(
-                    ex.Message, "Exception occurred: {Message}", ex.InnerException?.Message);
+                Log.Error(ex.Message, "Exception occurred: {Message}", ex.InnerException?.Message);
                 throw;
             }
         }

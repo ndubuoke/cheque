@@ -55,7 +55,6 @@ namespace ChequeMicroservice.Infrastructure
             services.AddProblemDetails();
             services.AddTransient<IApiClientService, ApiClientService>();
             services.AddTransient<IRestClient, RestClient>();
-            services.AddTransient<INotificationService, NotificationService>();
             return services;
         }
 
