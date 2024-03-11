@@ -42,6 +42,10 @@
     <PackageReference Include="Serilog.Sinks.Seq" Version="7.0.0" />
   </ItemGroup>
 
+	<ItemGroup>
+		<Compile Remove="src\Infrastructure\Migrations\**" />
+	</ItemGroup>
+	
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
   </ItemGroup>

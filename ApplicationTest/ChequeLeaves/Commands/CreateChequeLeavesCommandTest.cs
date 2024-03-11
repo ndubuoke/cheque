@@ -59,7 +59,7 @@ namespace Application.UnitTests.ChequeLeaves.Commands
             var handler = new CreateChequeLeavesCommandHandler(_contextMock.Object);
             var result = await handler.Handle(new CreateChequeLeavesCommand
             {
-                ChequeId = 1,
+                ChequeId = 3,
                 UserId = Guid.NewGuid().ToString()
             }, CancellationToken.None);
             Assert.Multiple(() =>
