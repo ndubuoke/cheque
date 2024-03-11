@@ -46,9 +46,9 @@ namespace API.Controllers
         /// <param name="chequeId">The cheque cheque id</param>
         /// <returns>Returns the Result object either success/failure</returns>
         [HttpGet("getchequeleaves/{skip}/{take}/{chequeId}/{userId}")]
-        public async Task<ActionResult> GetChequeLeaves(int skip, int take, int chequeId)
+        public async Task<ActionResult> GetChequeLeaves(int skip, int take, int chequeId, string searchValue)
         {
-            Result checkLeavesRetrievalResult = await Mediator.Send(new GetChequeLeavesQuery { Skip = skip, Take = take, ChequeId = chequeId });
+            Result checkLeavesRetrievalResult = await Mediator.Send(new GetChequeLeavesQuery { Skip = skip, Take = take, ChequeId = chequeId, SearchValue = searchValue });
             return Ok(checkLeavesRetrievalResult);
         }
 

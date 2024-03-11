@@ -1,6 +1,7 @@
 ﻿using ChequeMicroservice.Application.Common.Interfaces;
 using ChequeMicroservice.Application.Common.Models;
 using ChequeMicroservice.Domain.Entities;
+using ChequeMicroservice.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
@@ -27,7 +28,9 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Commands
             {
                 return Result.Failure<StopChequeLeafCommand>("No cheque record found");
             }
-            chequeLeaf.ChequeLeafStatus = Domain.Enums.ChequeLeafStatus.Stopped;
+            chequeLeaf.ChequeLeafStatusDesc = ChequeLeafStatus.Stopped.ToString();
+            chequeLeaf.LastModifiedDate = System.DateTime.Now;
+            chequeLeaf.ChequeLeafStatus = ChequeLeafStatus.Stopped;
 
             _context.ChequeLeaves.Update(chequeLeaf);
             await _context.SaveChangesAsync(cancellationToken);

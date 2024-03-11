@@ -48,11 +48,12 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Commands
                     return Result.Failure<CreateChequeLeavesCommand>("An error occured while trying to create cheque leaves. Series not in appropriate order");
                 }
 
-                for (long i = chequeStartingSeriesValue; i <= chequeEndingSeriesValue; i++)
+                for (long i = 0; i <= cheque.NumberOfChequeLeaf; i++)
                 {
+
                     chequeLeaves.Add(new ChequeLeaf
                     {
-                        LeafNumber = i.ToString(),
+                        LeafNumber = chequeStartingSeriesValue.ToString(),
                         ChequeId = cheque.Id,
                         ChequeLeafStatus = ChequeLeafStatus.Available,
                         Status = Status.Active,
@@ -60,6 +61,7 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Commands
                         CreatedDate = DateTime.UtcNow,
                         CreatedBy = request.UserId
                     });
+                    chequeStartingSeriesValue++;
                 }
 
                 await _context.ChequeLeaves.AddRangeAsync(chequeLeaves);
