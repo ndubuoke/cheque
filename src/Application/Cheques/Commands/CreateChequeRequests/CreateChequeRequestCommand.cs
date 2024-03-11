@@ -36,21 +36,6 @@ namespace ChequeMicroservice.Application.Cheques.CreateCheques
                 {
                     return Result.Failure<CreateChequeRequestCommand>("An active cheque already exist");
                 }
-                if (existingCheque != null)
-                {
-                    if (existingCheque.SeriesStartingNumber == request.SeriesStartingNumber)
-                    {
-                        return Result.Failure<CreateChequeRequestCommand>("Cheque already exists with this series start date");
-                    }
-                    if (existingCheque.SeriesEndingNumber == request.SeriesEndingNumber)
-                    {
-                        return Result.Failure<CreateChequeRequestCommand>("Cheque already exists with this series end date");
-                    }
-                }
-                if (existingCheque != null && existingCheque.ObjectCategory == ObjectCategory.Record)
-                {
-                    return Result.Failure<CreateChequeRequestCommand>("Cheque already exists");
-                }
                 Cheque newCheque = new Cheque
                 {
                     ChequeStatus = ChequeStatus.Initiated,
