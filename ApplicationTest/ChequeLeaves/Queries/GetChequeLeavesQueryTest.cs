@@ -26,7 +26,8 @@ namespace Application.UnitTests.ChequeLeaves.Queries
             {
                 Skip = 0,
                 Take = 0,
-                ChequeId = 1
+                ChequeId = 1,
+                SearchValue = "123456789"
             };
 
             var handler = new GetChequeLeavesQueryHandler(_contextMock.Object);
@@ -38,6 +39,11 @@ namespace Application.UnitTests.ChequeLeaves.Queries
                 Assert.That(result.Message, Is.EqualTo("Cheque leaves retrieved successfully"));
             });
         }
+
+
+
+
+
 
 
         [Test]
