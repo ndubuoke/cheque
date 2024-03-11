@@ -15,6 +15,7 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Queries
         public int ChequeId { get; set; }
         public int Skip { get; set; }
         public int Take { get; set; }
+        public string SearchValue { get; set; }
     }
 
     public class GetChequeLeavesQueryHandler : IRequestHandler<GetChequeLeavesQuery, Result>
@@ -30,6 +31,10 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Queries
             if (chequeLeaves.Count == 0)
             {
                 return Result.Failure<GetChequeLeavesQuery>("No cheque leaves record found");
+            }
+            if (string.IsNullOrEmpty(request.SearchValue))
+            {
+                chequeLeaves = chequeLeaves.Where(c => c.LeafNumber.Contains(request.SearchValue)).ToList();
             }
             if (request.Skip > 0 || request.Take > 0)
             {

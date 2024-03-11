@@ -4,6 +4,7 @@ using ChequeMicroservice.Domain.Entities;
 using ChequeMicroservice.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,6 +29,7 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Commands
             {
                 return Result.Failure<UpdateChequeLeafCommand>("No cheque record found");
             }
+            chequeLeaf.LastModifiedDate = DateTime.Now;
             chequeLeaf.ChequeLeafStatus = ChequeLeafStatus.Used;
             chequeLeaf.ChequeLeafStatusDesc = ChequeLeafStatus.Used.ToString();
             _context.ChequeLeaves.Update(chequeLeaf);
