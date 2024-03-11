@@ -3,37 +3,80 @@ using ChequeMicroservice.Application.ChequeLeaves.Commands;
 using MediatR;
 using Moq;
 using ChequeMicroservice.Application.Common.Models;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Application.UnitTests.Services;
+using NUnit.Framework;
+using ChequeMicroservice.Application.ChequeLeaves.Queries;
 
 namespace Application.UnitTests.ChequeLeaves.ControllerTests
 {
     public class ChequeLeafControllerTest
     {
         private Mock<IMediator> _mediatorMock;
-        private Mock<IHttpContextAccessor> _httpContextAccessor;
-        private ChequesController _controller;
+        private Mock<IHttpContextAccessor> _contextAccessorMock;
 
         [SetUp]
         public void Setup()
         {
             _mediatorMock = new Mock<IMediator>();
-            _httpContextAccessor = new Mock<IHttpContextAccessor>();
-            _controller = new ChequesController(_httpContextAccessor.Object);
+            var mockHttpContext = new DefaultHttpContext();
+            _contextAccessorMock = new Mock<IHttpContextAccessor>();
+            mockHttpContext.Request.Headers["Authorization"] = "Bearer SampleAccessToken";
+            _contextAccessorMock.Setup(a => a.HttpContext).Returns(mockHttpContext);
         }
 
         [Test]
-        public async Task StopChequeLeaf_ValidLeafNumber_ReturnsOk()
+        public async Task GetChequeLeavesQuerySuccessTest()
         {
-            // Arrange
-            var result = _controller.GetChequeById(1);
-            Assert.AreEqual(true, result.IsCompletedSuccessfully);
+            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success<GetChequeLeavesQuery>("Cheque leaves retrieved successfully"));
+            var httpContext = _mediatorMock.CreateHttpContextWithMediator();
+            var controllerContext = new ControllerContext
+            {
+                HttpContext = httpContext,
+            };
+            var controller = new ChequeLeavesController(_contextAccessorMock.Object)
+            {
+                ControllerContext = controllerContext,
+            };
+            var result = await controller.GetChequeLeaves(0, 0, 1) as OkObjectResult;
+            Assert.AreEqual(200, result.StatusCode);
         }
 
+
+        [Test]
+        public async Task StopChequeLeafSuccessTest()
+        {
+            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success<StopChequeLeafCommand>("Cheque leaf stopped successfully"));
+            var httpContext = _mediatorMock.CreateHttpContextWithMediator();
+            var controllerContext = new ControllerContext
+            {
+                HttpContext = httpContext,
+            };
+            var controller = new ChequeLeavesController(_contextAccessorMock.Object)
+            {
+                ControllerContext = controllerContext,
+            };
+            var result = await controller.StopChequeLeaf("12345") as OkObjectResult;
+            Assert.AreEqual(200, result.StatusCode);
+        }
+
+
+        [Test]
+        public async Task ConfirmChequeLeafSuccessTest()
+        {
+            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success<ConfirmChequeLeafQuery>("Cheque leaf confirmed successfully"));
+            var httpContext = _mediatorMock.CreateHttpContextWithMediator();
+            var controllerContext = new ControllerContext
+            {
+                HttpContext = httpContext,
+            };
+            var controller = new ChequeLeavesController(_contextAccessorMock.Object)
+            {
+                ControllerContext = controllerContext,
+            };
+            var result = await controller.ConfirmChequeLeaf("12345") as OkObjectResult;
+            Assert.AreEqual(200, result.StatusCode);
+        }
     }
 }
