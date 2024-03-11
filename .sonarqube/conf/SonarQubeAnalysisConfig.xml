@@ -135,7 +135,9 @@
     <Property Name="sonar.core.id">147B411E-AY4fV7zzGHzyBIlG292c</Property>
     <Property Name="sonar.core.startTime">3/11/2024 2:30:52 PM</Property>
   </ServerSettings>
-  <LocalSettings />
+  <LocalSettings>
+    <Property Name="sonar.cs.vscoveragexml.reportsPaths">coverage.xml</Property>
+  </LocalSettings>
   <AnalyzersSettings>
     <AnalyzerSettings>
       <Language>cs</Language>

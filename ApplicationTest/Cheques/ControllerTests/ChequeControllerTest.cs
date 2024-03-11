@@ -47,7 +47,7 @@ namespace Application.UnitTests.Cheques.ControllerTests
         public async Task CreateChequeRequestControllerTest()
         {
             var mockHttpContext = new DefaultHttpContext();
-            mockHttpContext.Request.Headers["Authorization"] = "Bearer SampleAccessToken";
+            mockHttpContext.Request.Headers.Authorization = "Bearer SampleAccessToken";
             _contextAccessorMock.Setup(a => a.HttpContext).Returns(mockHttpContext);
             _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success("Cheque created successfully"));
             var httpContext = _mediatorMock.CreateHttpContextWithMediator();
@@ -67,7 +67,7 @@ namespace Application.UnitTests.Cheques.ControllerTests
         public async Task ApproveOrRejectControllerTest_InvalidToken()
         {
             var mockHttpContext = new DefaultHttpContext();
-            mockHttpContext.Request.Headers["Authorization"] = "";
+            mockHttpContext.Request.Headers.Authorization = "";
             _contextAccessorMock.Setup(a => a.HttpContext).Returns(mockHttpContext);
             _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success("Cheque request approved successfully"));
             var httpContext = _mediatorMock.CreateHttpContextWithMediator();
@@ -87,7 +87,7 @@ namespace Application.UnitTests.Cheques.ControllerTests
         public async Task ApproveOrRejectControllerTest()
         {
             var mockHttpContext = new DefaultHttpContext();
-            mockHttpContext.Request.Headers["Authorization"] = "Bearer SampleAccessToken";
+            mockHttpContext.Request.Headers.Authorization = "Bearer SampleAccessToken";
             _contextAccessorMock.Setup(a => a.HttpContext).Returns(mockHttpContext);
             _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success("Cheque request approved successfully"));
             var httpContext = _mediatorMock.CreateHttpContextWithMediator();
@@ -107,7 +107,7 @@ namespace Application.UnitTests.Cheques.ControllerTests
         public async Task GetChequeByIdControllerTest_InvalidToken_Failure()
         {
             var mockHttpContext = new DefaultHttpContext();
-            mockHttpContext.Request.Headers["Authorization"] = "";
+            mockHttpContext.Request.Headers.Authorization = "";
             _contextAccessorMock.Setup(a => a.HttpContext).Returns(mockHttpContext);
             _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success("Cheque retrieved successfully"));
             var httpContext = _mediatorMock.CreateHttpContextWithMediator();
@@ -127,7 +127,7 @@ namespace Application.UnitTests.Cheques.ControllerTests
         public async Task GetChequeByIdControllerTest()
         {
             var mockHttpContext = new DefaultHttpContext();
-            mockHttpContext.Request.Headers["Authorization"] = "Bearer SampleAccessToken";
+            mockHttpContext.Request.Headers.Authorization = "Bearer SampleAccessToken";
             _contextAccessorMock.Setup(a => a.HttpContext).Returns(mockHttpContext);
             _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success("Cheque retrieved successfully"));
             var httpContext = _mediatorMock.CreateHttpContextWithMediator();
@@ -147,7 +147,7 @@ namespace Application.UnitTests.Cheques.ControllerTests
         public async Task GetChequesControllerTest_InvalidToken_Failure()
         {
             var mockHttpContext = new DefaultHttpContext();
-            mockHttpContext.Request.Headers["Authorization"] = "";
+            mockHttpContext.Request.Headers.Authorization = "";
             _contextAccessorMock.Setup(a => a.HttpContext).Returns(mockHttpContext);
             _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success("Cheques retrieved successfully"));
             var httpContext = _mediatorMock.CreateHttpContextWithMediator();
@@ -167,7 +167,7 @@ namespace Application.UnitTests.Cheques.ControllerTests
         public async Task GetChequesControllerTest()
         {
             var mockHttpContext = new DefaultHttpContext();
-            mockHttpContext.Request.Headers["Authorization"] = "Bearer SampleAccessToken";
+            mockHttpContext.Request.Headers.Authorization = "Bearer SampleAccessToken";
             _contextAccessorMock.Setup(a => a.HttpContext).Returns(mockHttpContext);
             _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success("Cheques retrieved successfully"));
             var httpContext = _mediatorMock.CreateHttpContextWithMediator();

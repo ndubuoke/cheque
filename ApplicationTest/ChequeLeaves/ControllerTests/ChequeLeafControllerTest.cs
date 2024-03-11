@@ -69,7 +69,7 @@ namespace Application.UnitTests.ChequeLeaves.ControllerTests
         public async Task StopChequeLeaf_InvalidToken_Test()
         {
             var mockHttpContext = new DefaultHttpContext();
-            mockHttpContext.Request.Headers["Authorization"] = "";
+            mockHttpContext.Request.Headers.Authorization = "";
             _contextAccessorMock.Setup(a => a.HttpContext).Returns(mockHttpContext);
             _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success("Cheque leaf stopped successfully"));
             var httpContext = _mediatorMock.CreateHttpContextWithMediator();
@@ -131,7 +131,7 @@ namespace Application.UnitTests.ChequeLeaves.ControllerTests
         public async Task ConfirmChequeLeaf_InvalidBearerToken_ReturnFalseTest()
         {
             var mockHttpContext = new DefaultHttpContext();
-            mockHttpContext.Request.Headers["Authorization"] = "";
+            mockHttpContext.Request.Headers.Authorization = "";
             _contextAccessorMock.Setup(a => a.HttpContext).Returns(mockHttpContext);
             _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success("Cheque leaf confirmed successfully"));
             var httpContext = _mediatorMock.CreateHttpContextWithMediator();
