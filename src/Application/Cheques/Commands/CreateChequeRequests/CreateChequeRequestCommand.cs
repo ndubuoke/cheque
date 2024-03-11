@@ -30,25 +30,24 @@ namespace ChequeMicroservice.Application.Cheques.CreateCheques
         {
             try
             {
-                Cheque existingCheck = await _context.Cheques.FirstOrDefaultAsync(c => c.Status == Status.Active, cancellationToken);
-                if (existingCheck != null)
-                {
-                    return Result.Failure<CreateChequeRequestCommand>("An active check already exist");
-                }
                 await _context.BeginTransactionAsync();
-                Cheque cheque = await _context.Cheques.FirstOrDefaultAsync(a => a.SeriesStartingNumber == request.SeriesStartingNumber || a.SeriesEndingNumber == request.SeriesEndingNumber, cancellationToken);
-                if (cheque != null)
+                Cheque existingCheque = await _context.Cheques.FirstOrDefaultAsync(a => a.SeriesStartingNumber == request.SeriesStartingNumber && a.SeriesEndingNumber == request.SeriesEndingNumber, cancellationToken);
+                if (existingCheque != null)
                 {
-                    if (cheque.SeriesStartingNumber == request.SeriesStartingNumber)
+                    return Result.Failure<CreateChequeRequestCommand>("An active cheque already exist");
+                }
+                if (existingCheque != null)
+                {
+                    if (existingCheque.SeriesStartingNumber == request.SeriesStartingNumber)
                     {
                         return Result.Failure<CreateChequeRequestCommand>("Cheque already exists with this series start date");
                     }
-                    if (cheque.SeriesEndingNumber == request.SeriesEndingNumber)
+                    if (existingCheque.SeriesEndingNumber == request.SeriesEndingNumber)
                     {
                         return Result.Failure<CreateChequeRequestCommand>("Cheque already exists with this series end date");
                     }
                 }
-                if (cheque != null && cheque.ObjectCategory == ObjectCategory.Record)
+                if (existingCheque != null && existingCheque.ObjectCategory == ObjectCategory.Record)
                 {
                     return Result.Failure<CreateChequeRequestCommand>("Cheque already exists");
                 }
@@ -72,7 +71,7 @@ namespace ChequeMicroservice.Application.Cheques.CreateCheques
                 await _context.Cheques.AddAsync(newCheque,cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
                 await _context.CommitTransactionAsync();
-                return Result.Success<CreateChequeRequestCommand>("Cheque created successfully", cheque);
+                return Result.Success<CreateChequeRequestCommand>("Cheque created successfully", newCheque);
             }
             catch (Exception)
             {

@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ChequeMicroservice.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class addmigrationforlocaldb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -54,7 +54,7 @@ namespace ChequeMicroservice.Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ChequeId = table.Column<int>(type: "integer", nullable: false),
                     ChequeLeafId = table.Column<Guid>(type: "uuid", nullable: false),
-                    LeafNumber = table.Column<long>(type: "bigint", nullable: false),
+                    LeafNumber = table.Column<string>(type: "text", nullable: true),
                     ChequeLeafStatus = table.Column<int>(type: "integer", nullable: false),
                     ChequeLeafStatusDesc = table.Column<string>(type: "text", nullable: true),
                     ObjectGuId = table.Column<Guid>(type: "uuid", nullable: false),

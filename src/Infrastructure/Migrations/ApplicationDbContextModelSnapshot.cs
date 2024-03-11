@@ -224,8 +224,8 @@ namespace ChequeMicroservice.Infrastructure.Migrations
                     b.Property<DateTime?>("LastModifiedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long>("LeafNumber")
-                        .HasColumnType("bigint");
+                    b.Property<string>("LeafNumber")
+                        .HasColumnType("text");
 
                     b.Property<Guid>("ObjectGuId")
                         .HasColumnType("uuid");

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ChequeMicroservice.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240307193138_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20240311101320_addmigrationforlocaldb")]
+    partial class addmigrationforlocaldb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -227,8 +227,8 @@ namespace ChequeMicroservice.Infrastructure.Migrations
                     b.Property<DateTime?>("LastModifiedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long>("LeafNumber")
-                        .HasColumnType("bigint");
+                    b.Property<string>("LeafNumber")
+                        .HasColumnType("text");
 
                     b.Property<Guid>("ObjectGuId")
                         .HasColumnType("uuid");
