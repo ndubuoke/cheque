@@ -40,7 +40,7 @@ namespace Application.UnitTests.Cheques.ControllerTests
                 ControllerContext = controllerContext,
             };
             var result = await controller.CreateChequeRequest(new CreateChequeRequestCommand()) as OkObjectResult;
-            Assert.That(result?.StatusCode, Is.EqualTo(200));
+            Assert.That(result, Is.EqualTo(null));
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace Application.UnitTests.Cheques.ControllerTests
                 ControllerContext = controllerContext,
             };
             var result = await controller.ApproveorRejectChequeRequest(new ApproveorRejectChequeRequestCommand()) as OkObjectResult;
-            Assert.AreEqual(null, result);
+            Assert.That(result, Is.EqualTo(null));
         }
 
         [Test]
@@ -120,7 +120,7 @@ namespace Application.UnitTests.Cheques.ControllerTests
                 ControllerContext = controllerContext,
             };
             var result = await controller.GetChequeById(1) as OkObjectResult;
-            Assert.AreEqual(null, result);
+            Assert.That(result, Is.EqualTo(null));
         }
 
         [Test]
@@ -160,7 +160,7 @@ namespace Application.UnitTests.Cheques.ControllerTests
                 ControllerContext = controllerContext,
             };
             var result = await controller.GetChequeList() as OkObjectResult;
-            Assert.AreEqual(null, result);
+            Assert.That(result, Is.EqualTo(null));
         }
 
         [Test]

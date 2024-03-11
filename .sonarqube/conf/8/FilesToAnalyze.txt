@@ -1,0 +1,33 @@
+﻿C:\Users\Oluchi\source\repos\cheque-ms\src\API\Controllers\ApiController.cs
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Controllers\ChequeLeavesController.cs
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Controllers\ChequesController.cs
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Program.cs
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Startup.cs
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\obj\Debug\net8.0\.NETCoreApp,Version=v8.0.AssemblyAttributes.cs
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\obj\Debug\net8.0\API.AssemblyInfo.cs
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\obj\Debug\net8.0\API.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\appsettings.Development.json
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\appsettings.json
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Dockerfile
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Logs\ChequeMicroservice20240306.txt
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Logs\ChequeMicroservice20240307.txt
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Logs\ChequeMicroservice20240309.txt
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Logs\ChequeMicroservice20240310.txt
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Logs\ChequeMicroservice20240311.txt
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Properties\launchSettings.json
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Properties\ServiceDependencies\dev-asposeservice - Web Deploy1\profile.arm.json
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Properties\ServiceDependencies\dev-asposeservice - Web Deploy\profile.arm.json
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Properties\ServiceDependencies\prod-asposeservice - Web Deploy\profile.arm.json
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Properties\PublishProfiles\API20230417222737.pubxml
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Properties\PublishProfiles\dev-asposeservice - Web Deploy.pubxml
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Properties\PublishProfiles\dev-asposeservice - Web Deploy1.pubxml
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Properties\PublishProfiles\dev-db.pubxml
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Properties\PublishProfiles\dev-documentservice.pubxml
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Properties\PublishProfiles\flowmonodev.pubxml
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Properties\PublishProfiles\FolderProfile.pubxml
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Properties\PublishProfiles\FolderProfile1.pubxml
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Properties\PublishProfiles\FolderProfile2.pubxml
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Properties\PublishProfiles\FolderProfile3.pubxml
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Properties\PublishProfiles\FolderProfile4.pubxml
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Properties\PublishProfiles\prod-asposeservice - Web Deploy.pubxml
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Properties\PublishProfiles\prod-documentservice.pubxml

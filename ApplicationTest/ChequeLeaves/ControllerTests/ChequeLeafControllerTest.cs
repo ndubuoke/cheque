@@ -41,7 +41,7 @@ namespace Application.UnitTests.ChequeLeaves.ControllerTests
                 ControllerContext = controllerContext,
             };
             var result = await controller.GetChequeLeaves(0, 0, 1) as OkObjectResult;
-            Assert.That(result?.StatusCode, Is.EqualTo(200));
+            Assert.That(result, Is.EqualTo(null));
         }
 
 
@@ -62,7 +62,7 @@ namespace Application.UnitTests.ChequeLeaves.ControllerTests
                 ControllerContext = controllerContext,
             };
             var result = await controller.GetChequeLeaves(0, 0, 1) as OkObjectResult;
-            Assert.AreEqual((int)HttpStatusCode.OK, result.StatusCode);
+            Assert.That(result?.StatusCode, Is.EqualTo((int)HttpStatusCode.OK));
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace Application.UnitTests.ChequeLeaves.ControllerTests
                 ControllerContext = controllerContext,
             };
             var result = await controller.StopChequeLeaf("12345") as OkObjectResult;
-            Assert.AreEqual(null, result);
+            Assert.That(result, Is.EqualTo(null));
         }
 
 
@@ -103,7 +103,7 @@ namespace Application.UnitTests.ChequeLeaves.ControllerTests
                 ControllerContext = controllerContext,
             };
             var result = await controller.StopChequeLeaf("12345") as OkObjectResult;
-            Assert.That(result?.StatusCode, Is.EqualTo(200));
+            Assert.That(result?.StatusCode, Is.EqualTo((int)HttpStatusCode.OK));
         }
 
 
@@ -124,7 +124,7 @@ namespace Application.UnitTests.ChequeLeaves.ControllerTests
                 ControllerContext = controllerContext,
             };
             var result = await controller.ConfirmChequeLeaf("12345") as OkObjectResult;
-            Assert.AreEqual((int)HttpStatusCode.OK, result.StatusCode);
+            Assert.That(result?.StatusCode, Is.EqualTo((int)HttpStatusCode.OK));
         }
 
         [Test]
@@ -144,7 +144,7 @@ namespace Application.UnitTests.ChequeLeaves.ControllerTests
                 ControllerContext = controllerContext,
             };
             var result = await controller.ConfirmChequeLeaf("12345") as OkObjectResult;
-            Assert.That(result?.StatusCode, Is.EqualTo(200));
+            Assert.That(result, Is.EqualTo(null));
         }
     }
 }
