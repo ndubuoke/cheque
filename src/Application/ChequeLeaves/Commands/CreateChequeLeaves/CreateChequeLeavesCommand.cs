@@ -32,7 +32,7 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Commands
             try
             {
                 await _context.BeginTransactionAsync();
-                Cheque cheque = request.Cheque != null ? request.Cheque : await _context.Cheques.FirstOrDefaultAsync(a => a.Id == request.ChequeId);
+                Cheque cheque = request.Cheque != null ? request.Cheque : await _context.Cheques.FirstOrDefaultAsync(a => a.Id == request.ChequeId, cancellationToken);
 
                 List<ChequeLeaf> chequeLeaves = new List<ChequeLeaf>();
 
@@ -48,12 +48,11 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Commands
                     return Result.Failure<CreateChequeLeavesCommand>("An error occured while trying to create cheque leaves. Series not in appropriate order");
                 }
 
-                for (long i = 0; i <= cheque.NumberOfChequeLeaf; i++)
+                for (long leafNumber = chequeStartingSeriesValue; leafNumber <= chequeEndingSeriesValue; leafNumber++)
                 {
-
                     chequeLeaves.Add(new ChequeLeaf
                     {
-                        LeafNumber = chequeStartingSeriesValue.ToString(),
+                        LeafNumber = leafNumber.ToString(),
                         ChequeId = cheque.Id,
                         ChequeLeafStatus = ChequeLeafStatus.Available,
                         Status = Status.Active,
@@ -61,10 +60,9 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Commands
                         CreatedDate = DateTime.UtcNow,
                         CreatedBy = request.UserId
                     });
-                    chequeStartingSeriesValue++;
                 }
 
-                await _context.ChequeLeaves.AddRangeAsync(chequeLeaves);
+                await _context.ChequeLeaves.AddRangeAsync(chequeLeaves, cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
                 await _context.CommitTransactionAsync();
                 return Result.Success<CreateChequeLeavesCommand>("Cheque leaves created successfully", chequeLeaves);

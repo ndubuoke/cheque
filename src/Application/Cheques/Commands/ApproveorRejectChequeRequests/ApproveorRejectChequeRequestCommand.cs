@@ -30,7 +30,7 @@ namespace ChequeMicroservice.Application.Cheques.ApproveorRejectChequeRequests
             try
             {
                 await _context.BeginTransactionAsync();
-                Cheque cheque = await _context.Cheques.FirstOrDefaultAsync(a => a.Id == request.ChequeId);
+                Cheque cheque = await _context.Cheques.FirstOrDefaultAsync(a => a.Id == request.ChequeId, cancellationToken);
                 if (cheque == null)
                 {
                     return Result.Failure<ApproveorRejectChequeRequestCommand>("Invalid cheque id");

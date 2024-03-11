@@ -29,7 +29,7 @@ namespace ChequeMicroservice.Application.Cheques.CreateCheques
             try
             {
                 await _context.BeginTransactionAsync();
-                Cheque cheque = await _context.Cheques.FirstOrDefaultAsync(a => a.Id == request.ChequeId);
+                Cheque cheque = await _context.Cheques.FirstOrDefaultAsync(a => a.Id == request.ChequeId, cancellationToken);
                 if (cheque == null)
                 {
                     return Result.Failure<CreateChequeCommand>("Invalid cheque id");

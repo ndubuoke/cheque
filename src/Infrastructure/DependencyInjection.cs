@@ -11,6 +11,8 @@ using RestSharp;
 using Serilog.Events;
 using Serilog;
 using System.Text;
+using ChequeMicroservice.Application.Common.Exceptions;
+using Microsoft.Extensions.Options;
 
 namespace ChequeMicroservice.Infrastructure
 {
@@ -26,9 +28,9 @@ namespace ChequeMicroservice.Infrastructure
             else
             {
                 services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseSqlServer(
-                        configuration.GetConnectionString("DefaultConnection"),
-                        b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+                        options.UseNpgsql(
+                            configuration.GetConnectionString("DefaultConnection"),
+                            b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
             }
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
@@ -50,45 +52,14 @@ namespace ChequeMicroservice.Infrastructure
                         options.Configuration = new OpenIdConnectConfiguration();
                     });
             services.AddAuthorization();
-            services.AddTransient<IAPIClientService, APIClientService>();
+            services.AddProblemDetails();
+            services.AddTransient<IApiClientService, ApiClientService>();
             services.AddTransient<IRestClient, RestClient>();
             services.AddTransient<INotificationService, NotificationService>();
             return services;
         }
 
 
-    }
-    public static class ServiceExtensions
-    {
-        public static IServiceCollection AddJwtBearerContractentication(this IServiceCollection services)
-        {
-            //var builder = services.AddAuthentication(o =>
-            //{
-            //    o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //});
-
-            //builder.AddJwtBearer(options =>
-            //{
-            //    options.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        ValidateAudience = true,
-            //        ValidateIssuer = true,
-            //        ValidateLifetime = true,
-            //        IssuerSigningKey = new SymmetricSecurityKey(
-            //            Encoding.UTF8.GetBytes(TokenConstants.key)),
-            //        ValidIssuer = TokenConstants.Issuer,
-            //        ValidAudience = TokenConstants.Audience
-            //    };
-            //});
-
-            return services;
-        }
-
-        public static IServiceCollection AddRolesAndPolicyApiAuthorization(this IServiceCollection services)
-        {
-            return services;
-        }
     }
 }
 

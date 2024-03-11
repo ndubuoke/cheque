@@ -24,7 +24,7 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Commands
         }
         public async Task<Result> Handle(UpdateChequeLeafCommand request, CancellationToken cancellationToken)
         {
-            ChequeLeaf chequeLeaf = await _context.ChequeLeaves.FirstOrDefaultAsync(c => c.LeafNumber == request.LeafNumber);
+            ChequeLeaf chequeLeaf = await _context.ChequeLeaves.FirstOrDefaultAsync(c => c.LeafNumber == request.LeafNumber, cancellationToken);
             if (chequeLeaf == null)
             {
                 return Result.Failure<UpdateChequeLeafCommand>("No cheque record found");

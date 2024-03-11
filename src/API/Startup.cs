@@ -10,7 +10,11 @@ using Microsoft.OpenApi.Models;
 using ChequeMicroservice.Application;
 using ChequeMicroservice.Infrastructure;
 using ChequeMicroservice.Infrastructure.Persistence;
-using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Web.Http.ExceptionHandling;
+using System;
 
 namespace API
 {
@@ -27,7 +31,8 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddApplication();
+            services.AddProblemDetails();
+            services.AddApplication(); 
             services.AddInfrastructure(Configuration);
             services.AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
             {
@@ -42,10 +47,7 @@ namespace API
             services.AddHttpContextAccessor();
             services.AddHealthChecks()
             .AddDbContextCheck<ApplicationDbContext>();
-            services.AddControllersWithViews(
-                //options =>
-                //options.Filters.Add(new ApiExceptionFilter())
-                );
+            services.AddControllersWithViews();
             services.AddControllers().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
              );
@@ -77,15 +79,17 @@ namespace API
                                     Id = "Bearer"
                                 }
                             },
-                            new string[] {}
+                       Array.Empty<string>()
                     }
-                });
+                }); 
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            app.UseExceptionHandler(options => { });
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -103,12 +107,10 @@ namespace API
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
+
             app.UseHttpsRedirection();
-
-
             app.UseCors(options =>
             options.SetIsOriginAllowed(x => _ = true).AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-            app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseAuthentication();
@@ -124,6 +126,31 @@ namespace API
             {
                 endpoints.MapHealthChecks("/health");
             });
+        }
+        public class GlobalExceptionHandler : IExceptionHandler
+        {
+            private readonly ILogger<GlobalExceptionHandler> _logger;
+
+            public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)
+            {
+                _logger = logger;
+            }
+
+            public Task HandleAsync(ExceptionHandlerContext context, CancellationToken cancellationToken)
+            {
+                throw new NotImplementedException();
+            }
+
+            public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception)
+            {
+                _logger.LogError(
+           exception, "Exception occurred: {Message}", exception.Message);
+
+                httpContext.Response.ContentType = "text/plain";
+                httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                await httpContext.Response.WriteAsync($"It don't work: {exception.Message}");
+                return true;
+            }
         }
     }
 }

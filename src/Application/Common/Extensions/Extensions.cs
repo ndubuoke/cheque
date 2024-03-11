@@ -10,20 +10,18 @@ namespace ChequeMicroservice.Application.Common.Extensions
         {
             ICollection<T> items = default;
             count = 0;
-            try
-            {
                 if (list != null)
                 {
                     count = list.Count;
-                    if (skip == 0 & take == 0)
+                    if (skip == 0 && take == 0)
                     {
                         items = list;
                     }
-                    else if (skip > 0 & take == 0)
+                    else if (skip > 0 && take == 0)
                     {
                         items = list.Skip(skip.Value).ToList();
                     }
-                    else if (skip == 0 & take > 0)
+                    else if (skip == 0 && take > 0)
                     {
                         items = list.Take(take.Value).ToList();
                     }
@@ -32,8 +30,6 @@ namespace ChequeMicroservice.Application.Common.Extensions
                         items = list.Skip(skip.Value).Take(take.Value).ToList();
                     }
                 }
-            }
-            catch (Exception ex) { }
             return items;
         }
 
@@ -41,20 +37,19 @@ namespace ChequeMicroservice.Application.Common.Extensions
         {
             IQueryable<T> items = default;
             count = 0;
-            try
-            {
+          
                 if (list != null)
                 {
                     count = list.Count();
-                    if (skip == 0 & take == 0)
+                    if (skip == 0 && take == 0)
                     {
                         items = list;
                     }
-                    else if (skip > 0 & take == 0)
+                    else if (skip > 0 && take == 0)
                     {
                         items = list.Skip(skip.Value);
                     }
-                    else if (skip == 0 & take > 0)
+                    else if (skip == 0 && take > 0)
                     {
                         items = list.Take(take.Value);
                     }
@@ -63,8 +58,6 @@ namespace ChequeMicroservice.Application.Common.Extensions
                         items = list.Skip(skip.Value).Take(take.Value);
                     }
                 }
-            }
-            catch (Exception ex) { }
             return items;
         }
 
@@ -72,20 +65,18 @@ namespace ChequeMicroservice.Application.Common.Extensions
         {
             List<T> items = default(List<T>);
             count = 0;
-            try
-            {
                 if (list != null)
                 {
                     count = list.Count;
-                    if (skip == 0 & take == 0)
+                    if (skip == 0 && take == 0)
                     {
                         items = list;
                     }
-                    else if (skip > 0 & take == 0)
+                    else if (skip > 0 && take == 0)
                     {
                         items = list.Skip(skip.Value).ToList();
                     }
-                    else if (skip == 0 & take > 0)
+                    else if (skip == 0 && take > 0)
                     {
                         items = list.Take(take.Value).ToList();
                     }
@@ -94,8 +85,7 @@ namespace ChequeMicroservice.Application.Common.Extensions
                         items = list.Skip(skip.Value).Take(take.Value).ToList();
                     }
                 }
-            }
-            catch (Exception ex) { }
+           
             return items;
         }
 
@@ -120,20 +110,19 @@ namespace ChequeMicroservice.Application.Common.Extensions
         public static PaginatedList<T> Paginate<T>(this List<T> list, int? skip = 0, int? take = 0)
         {
             PaginatedList<T> result = new PaginatedList<T>();
-            try
-            {
                 List<T> items = new List<T>();
+                int count = 0;
                 if (list != null)
                 {
-                    if (skip == 0 & take == 0)
+                    if (skip == 0 && take == 0)
                     {
                         items = list;
                     }
-                    else if (skip > 0 & take == 0)
+                    else if (skip > 0 && take == 0)
                     {
                         items = list.Skip(skip.Value).ToList();
                     }
-                    else if (skip == 0 & take > 0)
+                    else if (skip == 0 && take > 0)
                     {
                         items = list.Take(take.Value).ToList();
                     }
@@ -141,84 +130,79 @@ namespace ChequeMicroservice.Application.Common.Extensions
                     {
                         items = list.Skip(skip.Value).Take(take.Value).ToList();
                     }
+                count = list.Count;
                 }
                 result = new PaginatedList<T>
                 {
                     PageItems = items,
-                    TotalCount = list.Count()
+                    TotalCount = count
                 };
-            }
-            catch (Exception ex) { }
             return result;
         }
 
         public static PaginatedList<T> Paginate<T>(this ICollection<T> list, int? skip = 0, int? take = 0)
         {
             PaginatedList<T> result = new PaginatedList<T>();
-            try
+            int count = 0;
+            ICollection<T> items = default;
+            if (list != null)
             {
-                ICollection<T> items = default;
-                if (list != null)
+                if (skip == 0 && take == 0)
                 {
-                    if (skip == 0 & take == 0)
-                    {
-                        items = list;
-                    }
-                    else if (skip > 0 & take == 0)
-                    {
-                        items = list.Skip(skip.Value).ToList();
-                    }
-                    else if (skip == 0 & take > 0)
-                    {
-                        items = list.Take(take.Value).ToList();
-                    }
-                    else
-                    {
-                        items = list.Skip(skip.Value).Take(take.Value).ToList();
-                    }
+                    items = list;
                 }
-                result = new PaginatedList<T>
+                else if (skip > 0 && take == 0)
                 {
-                    PageItems = items.ToList(),
-                    TotalCount = list.Count()
-                };
+                    items = list.Skip(skip.Value).ToList();
+                }
+                else if (skip == 0 && take > 0)
+                {
+                    items = list.Take(take.Value).ToList();
+                }
+                else
+                {
+                    items = list.Skip(skip.Value).Take(take.Value).ToList();
+                }
+                count = list.Count;
             }
-            catch (Exception ex) { }
+            result = new PaginatedList<T>
+            {
+                PageItems = items.ToList(),
+                TotalCount = count
+            };
             return result;
         }
 
         public static PaginatedList<T> Paginate<T>(this IQueryable<T> list, int? skip = 0, int? take = 0)
         {
             PaginatedList<T> result = new PaginatedList<T>();
-            try
+            int count = 0;
+            IQueryable<T> items = default;
+            if (list != null)
             {
-                IQueryable<T> items = default;
-                if (list != null)
+                if (skip == 0 && take == 0)
                 {
-                    if (skip == 0 & take == 0)
-                    {
-                        items = list;
-                    }
-                    else if (skip > 0 & take == 0)
-                    {
-                        items = list.Skip(skip.Value);
-                    }
-                    else if (skip == 0 & take > 0)
-                    {
-                        items = list.Take(take.Value);
-                    }
-                    else
-                    {
-                        items = list.Skip(skip.Value).Take(take.Value);
-                    }
+                    items = list;
                 }
+                else if (skip > 0 && take == 0)
+                {
+                    items = list.Skip(skip.Value);
+                }
+                else if (skip == 0 && take > 0)
+                {
+                    items = list.Take(take.Value);
+                }
+                else
+                {
+                    items = list.Skip(skip.Value).Take(take.Value);
+                }
+                count = list.Count();
+            }
                 result = new PaginatedList<T>
                 {
                     PageItems = items.ToList(),
-                    TotalCount = list.Count()
+                    TotalCount = count
                 };
-            }
-            catch (Exception ex) { }
             return result;
         }
 

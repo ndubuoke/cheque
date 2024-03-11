@@ -19,6 +19,10 @@
 
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="13.0.1" />
+		<PackageReference Include="coverlet.collector" Version="6.0.1">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="MediatR" Version="12.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.2" />
@@ -44,9 +48,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Update="wwwroot\GoogleDrive\client_secret_key.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
 	  <Content Update="Properties\launchSettings.json">
 	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -55,8 +56,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="wwwroot\TempDocuments\" />
-	  <Folder Include="wwwroot\TempDocuments\" />
+	  <Folder Include="wwwroot\" />
 	</ItemGroup>
 
 	<ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="https://json.schemastore.org/appsscript.json" /></VisualStudio></ProjectExtensions>

@@ -22,7 +22,7 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Queries
         }
         public async Task<Result> Handle(ConfirmChequeLeafQuery request, CancellationToken cancellationToken)
         {
-            ChequeLeaf chequeLeaf = await _context.ChequeLeaves.FirstOrDefaultAsync(c => c.LeafNumber == request.LeafNumber);
+            ChequeLeaf chequeLeaf = await _context.ChequeLeaves.FirstOrDefaultAsync(c => c.LeafNumber == request.LeafNumber,cancellationToken);
             if (chequeLeaf == null)
             {
                 return Result.Failure<GetChequeLeavesQuery>("No check leaf record found");

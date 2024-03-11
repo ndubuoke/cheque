@@ -22,7 +22,7 @@ namespace ChequeMicroservice.Application.Cheques.Queries
         }
         public async Task<Result> Handle(GetChequeByIdQuery request, CancellationToken cancellationToken)
         {
-            Cheque cheque = await _context.Cheques.FirstOrDefaultAsync(c => c.Id == request.ChequeId);
+            Cheque cheque = await _context.Cheques.FirstOrDefaultAsync(c => c.Id == request.ChequeId,cancellationToken);
             if (cheque == null)
             {
                 return Result.Failure<GetChequeByIdQuery>("No cheque record found");
