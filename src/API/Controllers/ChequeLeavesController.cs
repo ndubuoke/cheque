@@ -17,10 +17,6 @@ namespace API.Controllers
         {
             _httpContextAccessor = httpContextAccessor;
             accessToken = _httpContextAccessor.HttpContext.Request.Headers.Authorization.ToString();
-            if (accessToken == null)
-            {
-                throw new UnauthorizedAccessException("You are not authorized!");
-            }
         }
 
         /// <summary>
@@ -31,6 +27,10 @@ namespace API.Controllers
         [HttpPost("stopchequeleaf/{leafnumber}")]
         public async Task<ActionResult> StopChequeLeaf(string leafnumber)
         {
+            if (string.IsNullOrEmpty(accessToken))
+            {
+                return BadRequest("You are not authorized!");
+            }
             Result result = await Mediator.Send(new StopChequeLeafCommand { LeafNumber = leafnumber });
             return Ok(result);
         }
@@ -43,6 +43,10 @@ namespace API.Controllers
         [HttpGet("getchequeleaves/{skip}/{take}/{chequeId}")]
         public async Task<ActionResult> GetChequeLeaves(int skip, int take, int chequeId)
         {
+            if (string.IsNullOrEmpty(accessToken))
+            {
+                return BadRequest("You are not authorized!");
+            }
             Result checkLeavesRetrievalResult = await Mediator.Send(new GetChequeLeavesQuery { Skip = skip, Take = take, ChequeId = chequeId });
             return Ok(checkLeavesRetrievalResult);
         }
@@ -55,6 +59,10 @@ namespace API.Controllers
         [HttpGet("confirmchequeleaf/{leafNumber}")]
         public async Task<ActionResult> ConfirmChequeLeaf(string leafNumber)
         {
+            if (string.IsNullOrEmpty(accessToken))
+            {
+                return BadRequest("You are not authorized!");
+            }
             Result checkLeavesRetrievalResult = await Mediator.Send(new ConfirmChequeLeafQuery { LeafNumber = leafNumber });
             return Ok(checkLeavesRetrievalResult);
         }

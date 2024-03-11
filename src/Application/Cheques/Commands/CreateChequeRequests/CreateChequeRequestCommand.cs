@@ -34,21 +34,8 @@ namespace ChequeMicroservice.Application.Cheques.CreateCheques
                 Cheque existingCheque = await _context.Cheques.FirstOrDefaultAsync(a => a.SeriesStartingNumber == request.SeriesStartingNumber && a.SeriesEndingNumber == request.SeriesEndingNumber, cancellationToken);
                 if (existingCheque != null)
                 {
-                    if (existingCheque.SeriesStartingNumber == request.SeriesStartingNumber)
-                    {
-                        return Result.Failure("Cheque already exists with this series start date");
-                    }
-                    if (existingCheque.SeriesEndingNumber == request.SeriesEndingNumber)
-                    {
-                        return Result.Failure("Cheque already exists with this series end date");
-                    }
-                    if (existingCheque.ObjectCategory == ObjectCategory.Record)
-                    {
-                        return Result.Failure("Cheque already exists");
-                    }
-                    return Result.Failure("An active cheque already exist");
+                    return Result.Failure<CreateChequeRequestCommand>("An active cheque already exist");
                 }
-              
                 Cheque newCheque = new Cheque
                 {
                     ChequeStatus = ChequeStatus.Initiated,
@@ -69,7 +56,7 @@ namespace ChequeMicroservice.Application.Cheques.CreateCheques
                 await _context.Cheques.AddAsync(newCheque,cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
                 await _context.CommitTransactionAsync();
-                return Result.Success("Cheque created successfully", newCheque);
+                return Result.Success<CreateChequeRequestCommand>("Cheque created successfully", newCheque);
             }
             catch (Exception)
             {
