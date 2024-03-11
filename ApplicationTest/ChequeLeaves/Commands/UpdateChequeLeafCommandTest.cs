@@ -46,6 +46,8 @@ namespace Application.UnitTests.ChequeLeaves.Commands
             Assert.Multiple(() =>
             {
                 Assert.That(result.Succeeded, Is.False);
+                Assert.That(result.Entity, Is.Null);
+                Assert.That(result.Message, Is.EqualTo("No cheque record found"));
             });
         }
     }
