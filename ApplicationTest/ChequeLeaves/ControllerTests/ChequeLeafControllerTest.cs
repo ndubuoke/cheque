@@ -30,7 +30,7 @@ namespace Application.UnitTests.ChequeLeaves.ControllerTests
             var mockHttpContext = new DefaultHttpContext();
             mockHttpContext.Request.Headers["Authorization"] = "";
             _contextAccessorMock.Setup(a => a.HttpContext).Returns(mockHttpContext);
-            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success<GetChequeLeavesQuery>("Cheque leaves retrieved successfully"));
+            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success("Cheque leaves retrieved successfully"));
             var httpContext = _mediatorMock.CreateHttpContextWithMediator();
             var controllerContext = new ControllerContext
             {
@@ -51,7 +51,7 @@ namespace Application.UnitTests.ChequeLeaves.ControllerTests
             var mockHttpContext = new DefaultHttpContext();
             mockHttpContext.Request.Headers["Authorization"] = "Bearer SampleAccessToken";
             _contextAccessorMock.Setup(a => a.HttpContext).Returns(mockHttpContext);
-            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success<GetChequeLeavesQuery>("Cheque leaves retrieved successfully"));
+            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success("Cheque leaves retrieved successfully"));
             var httpContext = _mediatorMock.CreateHttpContextWithMediator();
             var controllerContext = new ControllerContext
             {
@@ -71,7 +71,7 @@ namespace Application.UnitTests.ChequeLeaves.ControllerTests
             var mockHttpContext = new DefaultHttpContext();
             mockHttpContext.Request.Headers["Authorization"] = "";
             _contextAccessorMock.Setup(a => a.HttpContext).Returns(mockHttpContext);
-            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success<StopChequeLeafCommand>("Cheque leaf stopped successfully"));
+            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success("Cheque leaf stopped successfully"));
             var httpContext = _mediatorMock.CreateHttpContextWithMediator();
             var controllerContext = new ControllerContext
             {
@@ -92,7 +92,7 @@ namespace Application.UnitTests.ChequeLeaves.ControllerTests
             var mockHttpContext = new DefaultHttpContext();
             mockHttpContext.Request.Headers["Authorization"] = "Bearer SampleAccessToken";
             _contextAccessorMock.Setup(a => a.HttpContext).Returns(mockHttpContext);
-            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success<StopChequeLeafCommand>("Cheque leaf stopped successfully"));
+            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success("Cheque leaf stopped successfully"));
             var httpContext = _mediatorMock.CreateHttpContextWithMediator();
             var controllerContext = new ControllerContext
             {
@@ -113,7 +113,7 @@ namespace Application.UnitTests.ChequeLeaves.ControllerTests
             var mockHttpContext = new DefaultHttpContext();
             mockHttpContext.Request.Headers["Authorization"] = "Bearer SampleAccessToken";
             _contextAccessorMock.Setup(a => a.HttpContext).Returns(mockHttpContext);
-            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success<ConfirmChequeLeafQuery>("Cheque leaf confirmed successfully"));
+            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success("Cheque leaf confirmed successfully"));
             var httpContext = _mediatorMock.CreateHttpContextWithMediator();
             var controllerContext = new ControllerContext
             {
@@ -133,7 +133,7 @@ namespace Application.UnitTests.ChequeLeaves.ControllerTests
             var mockHttpContext = new DefaultHttpContext();
             mockHttpContext.Request.Headers["Authorization"] = "";
             _contextAccessorMock.Setup(a => a.HttpContext).Returns(mockHttpContext);
-            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success<ConfirmChequeLeafQuery>("Cheque leaf confirmed successfully"));
+            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success("Cheque leaf confirmed successfully"));
             var httpContext = _mediatorMock.CreateHttpContextWithMediator();
             var controllerContext = new ControllerContext
             {
