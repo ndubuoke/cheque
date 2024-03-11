@@ -24,7 +24,6 @@ C:\Users\Oluchi\source\repos\cheque-ms\src\Application\Common\Interfaces\IApplic
 C:\Users\Oluchi\source\repos\cheque-ms\src\Application\Common\Interfaces\IEmailService.cs
 C:\Users\Oluchi\source\repos\cheque-ms\src\Application\Common\Interfaces\IEnumService.cs
 C:\Users\Oluchi\source\repos\cheque-ms\src\Application\Common\Interfaces\IFileUploadService.cs
-C:\Users\Oluchi\source\repos\cheque-ms\src\Application\Common\Interfaces\INotificationService.cs
 C:\Users\Oluchi\source\repos\cheque-ms\src\Application\Common\Mappings\IMapFrom.cs
 C:\Users\Oluchi\source\repos\cheque-ms\src\Application\Common\Models\ApiRequestDto.cs
 C:\Users\Oluchi\source\repos\cheque-ms\src\Application\Common\Models\AuditEntry.cs

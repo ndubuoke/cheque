@@ -24,7 +24,7 @@ namespace Application.UnitTests.Cheques.ControllerTests
             _mediatorMock = new Mock<IMediator>();
             var mockHttpContext = new DefaultHttpContext();
             _contextAccessorMock = new Mock<IHttpContextAccessor>();
-            mockHttpContext.Request.Headers["Authorization"] = "Bearer SampleAccessToken";
+            mockHttpContext.Request.Headers.Authorization= "Bearer SampleAccessToken";
             _contextAccessorMock.Setup(a => a.HttpContext).Returns(mockHttpContext);
         }
 
@@ -32,9 +32,9 @@ namespace Application.UnitTests.Cheques.ControllerTests
         public async Task GetChequesQuery_WithoutAccessToken_Test()
         {
             var mockHttpContext = new DefaultHttpContext();
-            mockHttpContext.Request.Headers["Authorization"] = "";
+            mockHttpContext.Request.Headers.Authorization = "";
             _contextAccessorMock.Setup(a => a.HttpContext).Returns(mockHttpContext);
-            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success<GetChequeLeavesQuery>("Cheque leaves retrieved successfully"));
+            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success("Cheque leaves retrieved successfully"));
             var httpContext = _mediatorMock.CreateHttpContextWithMediator();
             var controllerContext = new ControllerContext
             {
@@ -45,13 +45,13 @@ namespace Application.UnitTests.Cheques.ControllerTests
                 ControllerContext = controllerContext,
             };
             var result = await controller.CreateChequeRequest(new CreateChequeRequestCommand()) as OkObjectResult;
-            Assert.AreEqual(200, result.StatusCode);
+            Assert.That(result?.StatusCode, Is.EqualTo(200));
         }
 
         [Test]
         public async Task CreateChequeRequestControllerTest()
         {
-            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success<CreateChequeRequestCommand>("Cheque created successfully"));
+            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success("Cheque created successfully"));
             var httpContext = _mediatorMock.CreateHttpContextWithMediator();
             var controllerContext = new ControllerContext
             {
@@ -62,13 +62,13 @@ namespace Application.UnitTests.Cheques.ControllerTests
                 ControllerContext = controllerContext,
             };
             var result = await controller.CreateChequeRequest(new CreateChequeRequestCommand()) as OkObjectResult;
-            Assert.AreEqual(200, result.StatusCode);
+            Assert.That(result?.StatusCode, Is.EqualTo(200));
         }
 
         [Test]
         public async Task ApproveOrRejectControllerTest()
         {
-            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success<ApproveorRejectChequeRequestCommand>("Cheque request approved successfully"));
+            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success("Cheque request approved successfully"));
             var httpContext = _mediatorMock.CreateHttpContextWithMediator();
             var controllerContext = new ControllerContext
             {
@@ -79,13 +79,13 @@ namespace Application.UnitTests.Cheques.ControllerTests
                 ControllerContext = controllerContext,
             };
             var result = await controller.ApproveorRejectChequeRequest(new ApproveorRejectChequeRequestCommand()) as OkObjectResult;
-            Assert.AreEqual(200, result.StatusCode);
+            Assert.That(result?.StatusCode, Is.EqualTo(200));
         }
 
         [Test]
         public async Task GetChequeByIdControllerTest()
         {
-            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success<GetChequeByIdQuery>("Cheque retrieved successfully"));
+            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success("Cheque retrieved successfully"));
             var httpContext = _mediatorMock.CreateHttpContextWithMediator();
             var controllerContext = new ControllerContext
             {
@@ -96,13 +96,13 @@ namespace Application.UnitTests.Cheques.ControllerTests
                 ControllerContext = controllerContext,
             };
             var result = await controller.GetChequeById(1) as OkObjectResult;
-            Assert.AreEqual(200, result.StatusCode);
+            Assert.That(result?.StatusCode, Is.EqualTo(200));
         }
 
         [Test]
         public async Task GetChequesControllerTest()
         {
-            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success<GetAllChequesQuery>("Cheques retrieved successfully"));
+            _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success("Cheques retrieved successfully"));
             var httpContext = _mediatorMock.CreateHttpContextWithMediator();
             var controllerContext = new ControllerContext
             {
@@ -113,7 +113,7 @@ namespace Application.UnitTests.Cheques.ControllerTests
                 ControllerContext = controllerContext,
             };
             var result = await controller.GetChequeList() as OkObjectResult;
-            Assert.AreEqual(200, result.StatusCode);
+            Assert.That(result?.StatusCode, Is.EqualTo(200));
         }
     }
 }

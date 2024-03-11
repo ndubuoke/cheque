@@ -39,15 +39,5 @@
     <Folder Include="Common\Mappings\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="..\..\..\..\.nuget\packages\pdftron.net.x64\10.4.0\build\x64\PDFNetC.dll">
-      <Link>Users\Osigbemes\.nuget\packages\pdftron.net.x64\10.4.0\build\\x64\PDFNetC.dll</Link>
-    </None>
-    <None Update="..\..\..\..\.nuget\packages\pdftron.net.x64\10.4.0\build\x64\libPDFNetC.so">
-      <Link>Users\Osigbemes\.nuget\packages\pdftron.net.x64\10.4.0\build\\x64\libPDFNetC.so</Link>
-    </None>
-    <None Update="..\..\..\..\.nuget\packages\pdftron.net.x64\10.4.0\build\x64\libPDFNetC.dylib">
-      <Link>Users\Osigbemes\.nuget\packages\pdftron.net.x64\10.4.0\build\\x64\libPDFNetC.dylib</Link>
-    </None>
-  </ItemGroup>
+
 </Project>

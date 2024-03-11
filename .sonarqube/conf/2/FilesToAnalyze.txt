@@ -4,4 +4,3 @@ C:\Users\Oluchi\source\repos\cheque-ms\src\Infrastructure\Migrations\20240311101
 C:\Users\Oluchi\source\repos\cheque-ms\src\Infrastructure\Migrations\ApplicationDbContextModelSnapshot.cs
 C:\Users\Oluchi\source\repos\cheque-ms\src\Infrastructure\Persistence\ApplicationDbContext.cs
 C:\Users\Oluchi\source\repos\cheque-ms\src\Infrastructure\Services\ApiClientService.cs
-C:\Users\Oluchi\source\repos\cheque-ms\src\Infrastructure\Services\NotificationService.cs
