@@ -12,6 +12,8 @@ C:\Users\Oluchi\source\repos\cheque-ms\src\API\Dockerfile
 C:\Users\Oluchi\source\repos\cheque-ms\src\API\Logs\ChequeMicroservice20240306.txt
 C:\Users\Oluchi\source\repos\cheque-ms\src\API\Logs\ChequeMicroservice20240307.txt
 C:\Users\Oluchi\source\repos\cheque-ms\src\API\Logs\ChequeMicroservice20240309.txt
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Logs\ChequeMicroservice20240310.txt
+C:\Users\Oluchi\source\repos\cheque-ms\src\API\Logs\ChequeMicroservice20240311.txt
 C:\Users\Oluchi\source\repos\cheque-ms\src\API\Properties\launchSettings.json
 C:\Users\Oluchi\source\repos\cheque-ms\src\API\Properties\ServiceDependencies\dev-asposeservice - Web Deploy1\profile.arm.json
 C:\Users\Oluchi\source\repos\cheque-ms\src\API\Properties\ServiceDependencies\dev-asposeservice - Web Deploy\profile.arm.json

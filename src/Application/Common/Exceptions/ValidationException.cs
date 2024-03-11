@@ -33,20 +33,20 @@ namespace ChequeMicroservice.Application.Common.Exceptions
 
         public string GetErrors()
         {
-            string errors = null;
+            string errors = string.Empty;
             try
             {
                 if (Errors.Any())
                 {
-                    StringBuilder stringBuilder = new StringBuilder();
+                   
                     foreach (KeyValuePair<string, string[]> error in Errors)
                     {
-                        stringBuilder.AppendFormat(",", error);
+                        _ = string.Concat(",", error);
                     }
                 }
-                return errors?.TrimEnd(';');
+                return errors.TrimEnd(';');
             }
-            catch (Exception ex) { return errors; }
+            catch (Exception ){ return errors; }
         }
     }
 }

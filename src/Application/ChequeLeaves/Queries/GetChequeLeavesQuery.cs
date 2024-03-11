@@ -26,8 +26,8 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Queries
         }
         public async Task<Result> Handle(GetChequeLeavesQuery request, CancellationToken cancellationToken)
         {
-            List<ChequeLeaf> chequeLeaves = await _context.ChequeLeaves.Where(c => c.ChequeId == request.ChequeId).ToListAsync();
-            if (!chequeLeaves.Any())
+            List<ChequeLeaf> chequeLeaves = await _context.ChequeLeaves.Where(c => c.ChequeId == request.ChequeId).ToListAsync(cancellationToken);
+            if (chequeLeaves.Count == 0)
             {
                 return Result.Failure<GetChequeLeavesQuery>("No cheque leaves record found");
             }

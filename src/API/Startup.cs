@@ -31,7 +31,6 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddExceptionHandler<GlobalExceptionHandler>();
             services.AddProblemDetails();
             services.AddApplication(); 
             services.AddInfrastructure(Configuration);
@@ -48,10 +47,7 @@ namespace API
             services.AddHttpContextAccessor();
             services.AddHealthChecks()
             .AddDbContextCheck<ApplicationDbContext>();
-            services.AddControllersWithViews(
-                //options =>
-                //options.Filters.Add(new ApiExceptionFilter())
-                );
+            services.AddControllersWithViews();
             services.AddControllers().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
              );
@@ -83,9 +79,9 @@ namespace API
                                     Id = "Bearer"
                                 }
                             },
-                            new string[] {}
+                       Array.Empty<string>()
                     }
-                });
+                }); 
             });
         }
 

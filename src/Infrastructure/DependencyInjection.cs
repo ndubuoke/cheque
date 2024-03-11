@@ -52,9 +52,8 @@ namespace ChequeMicroservice.Infrastructure
                         options.Configuration = new OpenIdConnectConfiguration();
                     });
             services.AddAuthorization();
-            //services.AddExceptionHandler( options => <GlobalExceptionHandler>)();
             services.AddProblemDetails();
-            services.AddTransient<IAPIClientService, APIClientService>();
+            services.AddTransient<IApiClientService, ApiClientService>();
             services.AddTransient<IRestClient, RestClient>();
             services.AddTransient<INotificationService, NotificationService>();
             return services;

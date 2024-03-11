@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
+using System.Linq;
 
 namespace ChequeMicroservice.Application.Common.Models
 {
@@ -13,16 +14,6 @@ namespace ChequeMicroservice.Application.Common.Models
 
 	public class Result
 	{
-		private readonly ILogger _logger;
-        public Result()
-        {
-            
-        }
-        public Result(ILogger logger)
-		{
-			_logger = logger;
-		}
-
 		internal Result(bool succeeded, string message, object entity = default, string exception = null)
 		{
 			Succeeded = succeeded;
@@ -67,7 +58,7 @@ namespace ChequeMicroservice.Application.Common.Models
 		public static Result Success(object entity, Type request)
 		{
 			ILogger logger = ApplicationLogging.LoggerFactory.CreateLogger(nameof(request));
-			logger.LogInformation("Request was executed successfully!", entity);
+			logger.LogInformation($"Request was executed successfully!-{entity}",entity);
 			return new Result(true, entity);
 		}
 
@@ -168,133 +159,6 @@ namespace ChequeMicroservice.Application.Common.Models
 			ILogger logger = ApplicationLogging.CreateLogger<T>();
 			logger.LogError($"Error: {DateTime.Now}");
 			return new Result(false, entity);
-		}
-
-		public static Result Info(Type request, string information)
-		{
-			ILogger logger = ApplicationLogging.LoggerFactory.CreateLogger(nameof(request));
-			logger.LogInformation(information);
-			return new Result(true, information);
-		}
-
-		public static Result Info(Type request, object entity)
-		{
-			ILogger logger = ApplicationLogging.LoggerFactory.CreateLogger(nameof(request));
-			logger.LogInformation("Information!");
-			return new Result(true, entity);
-		}
-
-		public static Result Info<T>(T request, string message)
-		{
-			ILogger logger = ApplicationLogging.CreateLogger<T>();
-			logger.LogInformation(message, DateTime.Now);
-			return new Result(true, message);
-		}
-
-		public static Result Info<T>(T request, object entity)
-		{
-			ILogger logger = ApplicationLogging.CreateLogger<T>();
-			logger.LogInformation("Information");
-			return new Result(true, entity);
-		}
-
-		public static Result Warning(Type request, string message)
-		{
-			ILogger logger = ApplicationLogging.LoggerFactory.CreateLogger(nameof(request));
-			logger.LogWarning(message);
-			return new Result(false, message);
-		}
-
-		public static Result Warning(Type request, object entity)
-		{
-			ILogger logger = ApplicationLogging.LoggerFactory.CreateLogger(nameof(request));
-			logger.LogWarning("Warning!", entity);
-			return new Result(false, entity);
-		}
-
-		public static Result Warning<T>(string message)
-		{
-			ILogger logger = ApplicationLogging.CreateLogger<T>();
-			logger.LogWarning(message);
-			return new Result(false, message);
-		}
-
-		public static Result Warning<T>(object entity)
-		{
-			ILogger logger = ApplicationLogging.CreateLogger<T>();
-			logger.LogWarning("Warning!");
-			return new Result(false, entity);
-		}
-
-		public static Result Warning<T>(T request, string message)
-		{
-			ILogger logger = ApplicationLogging.LoggerFactory.CreateLogger(nameof(request));
-			logger.LogWarning(message);
-			return new Result(false, message);
-		}
-
-		public static Result Warning<T>(T request, object entity)
-		{
-			ILogger logger = ApplicationLogging.CreateLogger<T>();
-			logger.LogWarning("Warning!");
-			return new Result(false, entity);
-		}
-
-
-		public static Result Critical(Type request, string message)
-		{
-			ILogger logger = ApplicationLogging.LoggerFactory.CreateLogger(nameof(request));
-			logger.LogCritical(message);
-			return new Result(false, message);
-		}
-
-		public static Result Critical(Type request, object entity)
-		{
-			ILogger logger = ApplicationLogging.LoggerFactory.CreateLogger(nameof(request));
-			logger.LogCritical("Warning!", entity);
-			return new Result(false, entity);
-		}
-
-		public static Result Critical<T>(string message)
-		{
-			ILogger logger = ApplicationLogging.CreateLogger<T>();
-			logger.LogCritical(message);
-			return new Result(false, message);
-		}
-
-		public static Result Critical<T>(object entity)
-		{
-			ILogger logger = ApplicationLogging.CreateLogger<T>();
-			logger.LogCritical("Warning!");
-			return new Result(false, entity);
-		}
-
-		public static Result Critical<T>(T request, string message)
-		{
-			ILogger logger = ApplicationLogging.CreateLogger<T>();
-			logger.LogCritical(message);
-			return new Result(false, message);
-		}
-
-		public static Result Critical<T>(T request, object entity)
-		{
-			ILogger logger = ApplicationLogging.CreateLogger<T>();
-			logger.LogCritical("Critical!");
-			return new Result(false, entity);
-		}
-
-		public static Result Exception(Type request, Exception ex)
-		{
-			ILogger logger = ApplicationLogging.LoggerFactory.CreateLogger(nameof(request));
-			logger.LogCritical("Exception:", ex);
-			return new Result(false, ex.Message, null, ex?.InnerException?.Message);
-		}
-
-		public static Result Exception<T>(T request, Exception ex)
-		{
-			ILogger logger = ApplicationLogging.CreateLogger<T>();
-			logger.LogCritical("Exception:", request, ex);
-			return new Result(false, ex.Message, default, ex?.InnerException?.Message);
 		}
 	}
 

@@ -30,13 +30,13 @@ namespace ChequeMicroservice.Application.Cheques.CreateCheques
         {
             try
             {
-                Cheque existingCheck = await _context.Cheques.FirstOrDefaultAsync(c => c.Status == Status.Active);
+                Cheque existingCheck = await _context.Cheques.FirstOrDefaultAsync(c => c.Status == Status.Active, cancellationToken);
                 if (existingCheck != null)
                 {
                     return Result.Failure<CreateChequeRequestCommand>("An active check already exist");
                 }
                 await _context.BeginTransactionAsync();
-                Cheque cheque = await _context.Cheques.FirstOrDefaultAsync(a => a.SeriesStartingNumber == request.SeriesStartingNumber || a.SeriesEndingNumber == request.SeriesEndingNumber);
+                Cheque cheque = await _context.Cheques.FirstOrDefaultAsync(a => a.SeriesStartingNumber == request.SeriesStartingNumber || a.SeriesEndingNumber == request.SeriesEndingNumber, cancellationToken);
                 if (cheque != null)
                 {
                     if (cheque.SeriesStartingNumber == request.SeriesStartingNumber)
@@ -69,7 +69,7 @@ namespace ChequeMicroservice.Application.Cheques.CreateCheques
                     EntityId = "",//Get this from user id, we need a method to fetch user details and permissions
                     BranchId = "" ,//Get this from user id, we need a method to fetch user details and permissions
                 };
-                await _context.Cheques.AddAsync(newCheque);
+                await _context.Cheques.AddAsync(newCheque,cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
                 await _context.CommitTransactionAsync();
                 return Result.Success<CreateChequeRequestCommand>("Cheque created successfully", cheque);

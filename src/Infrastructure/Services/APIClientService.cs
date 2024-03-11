@@ -11,41 +11,22 @@ using System.Runtime.Serialization.Json;
 using System.IO;
 using System.Text;
 using Microsoft.Extensions.Logging;
+using Azure;
 
 namespace ChequeMicroservice.Infrastructure.Services
 {
-    public class APIClientService : IAPIClientService
+    public class ApiClientService : IApiClientService
     {
-        private readonly IConfiguration _configuration;
         private readonly IRestClient _client;
-        private readonly ILogger<APIClientService> _logger;
+        private readonly ILogger<ApiClientService> _logger;
 
-        public APIClientService(IConfiguration configuration, IRestClient client, ILogger<APIClientService> logger)
+        public ApiClientService(IRestClient client, ILogger<ApiClientService> logger)
         {
-            _configuration = configuration;
             _client = client;
             _logger = logger;
         }
 
-        public async Task<T> Get<T>(string apiUrl, string apiKey, bool isFormData = false)
-        {
-            try
-            {
-                RestRequest restRequest = new RestRequest(apiUrl);
-                if (!string.IsNullOrEmpty(apiKey))
-                {
-                    restRequest.AddHeader("Accept", "application/json");
-                    restRequest.AddHeader("Authorization", "Bearer " + apiKey);
-                }
-                T response = await _client.GetAsync<T>(restRequest); 
-                return response;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
+       
         public static string Serialize<T>(T obj)
         {
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(obj.GetType());
@@ -63,6 +44,26 @@ namespace ChequeMicroservice.Infrastructure.Services
             obj = (T)serializer.ReadObject(ms);
             ms.Close();
             return obj;
+        }
+        public async Task<T> Get<T>(string apiUrl, string apiKey, bool isFormData = false)
+        {
+            try
+            {
+                RestRequest restRequest = new RestRequest(apiUrl);
+                if (!string.IsNullOrEmpty(apiKey))
+                {
+                    restRequest.AddHeader("Accept", "application/json");
+                    restRequest.AddHeader("Authorization", "Bearer " + apiKey);
+                }
+                T response = await _client.GetAsync<T>(restRequest);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(
+                    ex.Message, "Exception occurred: {Message}", ex.InnerException?.Message);
+                throw;
+            }
         }
 
 
@@ -82,7 +83,9 @@ namespace ChequeMicroservice.Infrastructure.Services
             }
             catch (Exception ex)
             {
-                throw ex;
+                _logger.LogError(
+                    ex.Message, "Exception occurred: {Message}", ex.InnerException?.Message);
+                throw;
             }
         }
 
@@ -104,7 +107,9 @@ namespace ChequeMicroservice.Infrastructure.Services
             }
             catch (Exception ex)
             {
-                throw ex;
+                _logger.LogError(
+                  ex.Message, "Exception occurred: {Message}", ex.InnerException?.Message);
+                throw;
             }
         }
 
@@ -137,7 +142,9 @@ namespace ChequeMicroservice.Infrastructure.Services
             }
             catch (Exception ex)
             {
-                throw ex;
+                _logger.LogError(
+                    ex.Message, "Exception occurred: {Message}", ex.InnerException?.Message);
+                throw;
             }
         }
     

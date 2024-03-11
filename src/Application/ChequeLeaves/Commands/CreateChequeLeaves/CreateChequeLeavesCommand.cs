@@ -32,7 +32,7 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Commands
             try
             {
                 await _context.BeginTransactionAsync();
-                Cheque cheque = request.Cheque != null ? request.Cheque : await _context.Cheques.FirstOrDefaultAsync(a => a.Id == request.ChequeId);
+                Cheque cheque = request.Cheque != null ? request.Cheque : await _context.Cheques.FirstOrDefaultAsync(a => a.Id == request.ChequeId, cancellationToken);
 
                 List<ChequeLeaf> chequeLeaves = new List<ChequeLeaf>();
 
@@ -62,7 +62,7 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Commands
                     });
                 }
 
-                await _context.ChequeLeaves.AddRangeAsync(chequeLeaves);
+                await _context.ChequeLeaves.AddRangeAsync(chequeLeaves, cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
                 await _context.CommitTransactionAsync();
                 return Result.Success<CreateChequeLeavesCommand>("Cheque leaves created successfully", chequeLeaves);

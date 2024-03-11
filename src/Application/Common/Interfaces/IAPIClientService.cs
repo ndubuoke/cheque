@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChequeMicroservice.Application.Common.Interfaces
 {
-    public interface IAPIClientService
+    public interface IApiClientService
     {
         Task<string> Get(string apiUrl, string apiKey, object requestObject, bool isFormData = false);
         Task<T> Get<T>(string apiUrl, string apiKey, bool isFormData = false);

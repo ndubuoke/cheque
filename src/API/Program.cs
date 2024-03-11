@@ -17,14 +17,11 @@ using Serilog.Events;
 
 namespace API
 {
-    public class Program
+    public static class Program
     {
 
         public async static Task Main(string[] args)
         {
-            IConfigurationRoot config = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", optional: false)
-            .Build();
 
 			Log.Logger = new LoggerConfiguration().MinimumLevel.Override("Microsoft", LogEventLevel.Information)
 						.Enrich.FromLogContext().Enrich.WithProperty("applicationName", "SeaBass")
@@ -47,15 +44,10 @@ namespace API
                     {
                         context.Database.Migrate();
                     }
-
-                   // var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-                   // await ApplicationDbContextSeed.SeedDefaultUserAsync(userManager, context);
-                    // await ApplicationDbContextSeed.SeedSampleDataAsync(context);
                 }
                 catch (Exception ex)
                 {
-                    ILogger<Program> logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+                    Log.Error(ex, "An error occurred while migrating or seeding the database.");
                     throw;
                     
                 }

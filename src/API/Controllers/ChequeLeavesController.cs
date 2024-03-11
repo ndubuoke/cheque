@@ -19,9 +19,7 @@ namespace API.Controllers
         public ChequeLeavesController(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
-
-            accessToken = _httpContextAccessor.HttpContext.Request.Headers["Authorization"].ToString();
-
+            accessToken = _httpContextAccessor.HttpContext.Request.Headers.Authorization.ToString();
             if (accessToken == null)
             {
                 throw new UnauthorizedAccessException("You are not authorized!");
@@ -45,7 +43,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="chequeId">The cheque cheque id</param>
         /// <returns>Returns the Result object either success/failure</returns>
-        [HttpGet("getchequeleaves/{skip}/{take}/{chequeId}/{userId}")]
+        [HttpGet("getchequeleaves/{skip}/{take}/{chequeId}")]
         public async Task<ActionResult> GetChequeLeaves(int skip, int take, int chequeId)
         {
             Result checkLeavesRetrievalResult = await Mediator.Send(new GetChequeLeavesQuery { Skip = skip, Take = take, ChequeId = chequeId });

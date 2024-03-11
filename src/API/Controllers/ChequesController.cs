@@ -19,9 +19,7 @@ namespace API.Controllers
         public ChequesController(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
-
-            accessToken = _httpContextAccessor.HttpContext.Request.Headers["Authorization"].ToString();
-
+            accessToken = _httpContextAccessor.HttpContext.Request.Headers.Authorization.ToString();
             if (accessToken == null)
             {
                 throw new UnauthorizedAccessException("You are not authorized!");
