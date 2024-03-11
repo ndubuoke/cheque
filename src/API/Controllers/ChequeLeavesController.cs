@@ -1,10 +1,7 @@
 ﻿using ChequeMicroservice.API.Controllers;
 using ChequeMicroservice.Application.ChequeLeaves.Commands;
 using ChequeMicroservice.Application.ChequeLeaves.Queries;
-using ChequeMicroservice.Application.Cheques.ApproveorRejectChequeRequests;
 using ChequeMicroservice.Application.Common.Models;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;

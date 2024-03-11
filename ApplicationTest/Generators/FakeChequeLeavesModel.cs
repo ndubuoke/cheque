@@ -1,24 +1,11 @@
-﻿using ChequeMicroservice.Domain.Entities;
+﻿using ChequeMicroservice.Application.Common.Models;
+using ChequeMicroservice.Domain.Entities;
 using ChequeMicroservice.Domain.Enums;
 
 namespace Application.UnitTests.Generators
 {
     public static class FakeChequeLeavesModel
     {
-        public static ChequeLeaf GetChequeLeaf()
-        {
-            return new ChequeLeaf
-            {
-                ChequeId = 1,
-                ChequeLeafId = Guid.NewGuid(),
-                LeafNumber = Guid.NewGuid().ToString(),
-                ChequeLeafStatus = ChequeLeafStatus.Available,
-                ChequeLeafStatusDesc = ChequeLeafStatus.Available.ToString(),
-                CreatedDate = DateTime.Now,
-                CreatedBy = Guid.NewGuid().ToString()
-            };
-        }
-
         public static List<ChequeLeaf> GetChequeLeaves()
         {
             List<ChequeLeaf> leaves = new List<ChequeLeaf>()

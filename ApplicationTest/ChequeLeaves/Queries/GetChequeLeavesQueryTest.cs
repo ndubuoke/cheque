@@ -20,7 +20,7 @@ namespace Application.UnitTests.ChequeLeaves.Queries
         }
 
         [Test]
-        public async Task RetrieveChequeLeavesTests_Success()
+        public async Task RetrieveChequeLeavesTests_WithSearchValue_Success()
         {
             var request = new GetChequeLeavesQuery
             {
@@ -40,10 +40,26 @@ namespace Application.UnitTests.ChequeLeaves.Queries
             });
         }
 
+        [Test]
+        public async Task RetrieveChequeLeavesTests_WithTakeValue_Success()
+        {
+            var request = new GetChequeLeavesQuery
+            {
+                Skip = 0,
+                Take = 1,
+                ChequeId = 1,
+                SearchValue = "123456789"
+            };
 
-
-
-
+            var handler = new GetChequeLeavesQueryHandler(_contextMock.Object);
+            var result = await handler.Handle(request, CancellationToken.None);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Succeeded, Is.True);
+                Assert.That(result.Entity, Is.Not.Null);
+                Assert.That(result.Message, Is.EqualTo("Cheque leaves retrieved successfully"));
+            });
+        }
 
 
         [Test]
