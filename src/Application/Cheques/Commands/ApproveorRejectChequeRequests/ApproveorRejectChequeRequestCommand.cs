@@ -33,11 +33,11 @@ namespace ChequeMicroservice.Application.Cheques.ApproveorRejectChequeRequests
                 Cheque cheque = await _context.Cheques.FirstOrDefaultAsync(a => a.Id == request.ChequeId, cancellationToken);
                 if (cheque == null)
                 {
-                    return Result.Failure<ApproveorRejectChequeRequestCommand>("Invalid cheque id");
+                    return Result.Failure("Invalid cheque id");
                 }
                 if (cheque.ObjectCategory == ObjectCategory.Record)
                 {
-                    return Result.Failure<ApproveorRejectChequeRequestCommand>("Cheque already exists");
+                    return Result.Failure("Cheque already exists");
                 }
                 if (request.IsApproved)
                 {
@@ -51,7 +51,7 @@ namespace ChequeMicroservice.Application.Cheques.ApproveorRejectChequeRequests
                     var chequeEntity = await createChequeHandler.Handle(chequeForCreation, cancellationToken);
                     if (chequeEntity.Succeeded)
                     {
-                        return Result.Success<ApproveorRejectChequeRequestCommand>("Cheque request approved successfully", cheque);
+                        return Result.Success("Cheque request approved successfully", cheque);
                     }
                 }
                 cheque.ChequeStatus = ChequeStatus.Rejected;
@@ -60,7 +60,7 @@ namespace ChequeMicroservice.Application.Cheques.ApproveorRejectChequeRequests
                  _context.Cheques.Update(cheque);
                 await _context.SaveChangesAsync(cancellationToken);
                 await _context.CommitTransactionAsync();
-                return Result.Success<ApproveorRejectChequeRequestCommand>("Cheque request rejected successfully", cheque);
+                return Result.Success("Cheque request rejected successfully", cheque);
             }
             catch (Exception)
             {

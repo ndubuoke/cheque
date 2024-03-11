@@ -27,7 +27,7 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Commands
             ChequeLeaf chequeLeaf = await _context.ChequeLeaves.FirstOrDefaultAsync(c => c.LeafNumber == request.LeafNumber, cancellationToken);
             if (chequeLeaf == null)
             {
-                return Result.Failure<UpdateChequeLeafCommand>("No cheque record found");
+                return Result.Failure("No cheque record found");
             }
             chequeLeaf.LastModifiedDate = DateTime.Now;
             chequeLeaf.ChequeLeafStatus = ChequeLeafStatus.Used;
@@ -35,7 +35,7 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Commands
             _context.ChequeLeaves.Update(chequeLeaf);
             await _context.SaveChangesAsync(cancellationToken);
 
-            return Result.Success<UpdateChequeLeafCommand>("Cheque leaf updated successfully", chequeLeaf);
+            return Result.Success("Cheque leaf updated successfully", chequeLeaf);
         }
     }
 }

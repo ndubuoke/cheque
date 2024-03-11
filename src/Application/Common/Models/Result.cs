@@ -1,16 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Serilog;
 using System;
 using System.Linq;
 
 namespace ChequeMicroservice.Application.Common.Models
 {
-
-	public static class ApplicationLogging
-	{
-		public static ILoggerFactory LoggerFactory { get; } = new LoggerFactory();
-		public static ILogger CreateLogger<T>() => LoggerFactory.CreateLogger<T>();
-	}
 
 	public class Result
 	{
@@ -36,128 +32,91 @@ namespace ChequeMicroservice.Application.Common.Models
 
 		public static Result Success(object entity)
 		{
-			ILogger logger = ApplicationLogging.LoggerFactory.CreateLogger(nameof(entity));
-			logger.LogInformation("Request was executed successfully!");
+            Log.Information($"Request was executed successfully! {entity} ");
 			return new Result(true, "Request was executed successfully!", entity);
 		}
 
 		public static Result Success(Type request, string message)
 		{
-			ILogger logger = ApplicationLogging.LoggerFactory.CreateLogger(nameof(request));
-			logger.LogInformation(message);
+            Log.Information(message);
 			return new Result(true, message);
 		}
 
 		public static Result Success(object entity, string message, Type request)
 		{
-			ILogger logger = new LoggerFactory().CreateLogger(nameof(request));
-			logger.LogInformation(message, entity);
+            Log.Information(message, entity);
 			return new Result(true, message, entity);
 		}
 
 		public static Result Success(object entity, Type request)
 		{
-			ILogger logger = ApplicationLogging.LoggerFactory.CreateLogger(nameof(request));
-			logger.LogInformation($"Request was executed successfully!-{entity}",entity);
+            Log.Information($"Request was executed successfully!-{entity}",entity);
 			return new Result(true, entity);
 		}
 
-		public static Result Success<T>(string message)
+		public static Result Success(string message)
 		{
-			ILogger logger = ApplicationLogging.CreateLogger<T>();
-			logger.LogInformation(message);
+            Log.Information(message);
 			return new Result(true, message);
 		}
 
-		public static Result Success<T>(string message, object entity)
+		public static Result Success(string message, object entity)
 		{
-			ILogger logger = ApplicationLogging.CreateLogger<T>();
-			logger.LogInformation($"{message} {Environment.NewLine}" +
+            Log.Information($"{message} {Environment.NewLine}" +
 				$" {JsonConvert.SerializeObject(entity, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore })}");
-			return new Result(true, message, entity);
-		}
-
-
-		public static Result Success<T>(object entity, T request)
-		{
-			ILogger logger = ApplicationLogging.CreateLogger<T>();
-			logger.LogInformation("Request was executed successfully!");
-			return new Result(true, entity);
-		}
-
-		public static Result Success<T>(object entity, T request, string message)
-		{
-			ILogger logger = ApplicationLogging.CreateLogger<T>();
-			logger.LogInformation(message);
-			return new Result(true, message);
-		}
-
-		public static Result Success<T>(object entity, string message, T request)
-		{
-			ILogger logger = ApplicationLogging.CreateLogger<T>();
-			logger.LogInformation(message);
 			return new Result(true, message, entity);
 		}
 
 		public static Result Failure(Type request, string error)
 		{
-			ILogger logger = ApplicationLogging.LoggerFactory.CreateLogger(nameof(request));
-			logger.LogError(error);
+            Log.Error(error);
 			return new Result(false, error);
 		}
 
 		public static Result Failure(Type request, string prefixMessage, Exception ex)
 		{
-			ILogger logger = ApplicationLogging.LoggerFactory.CreateLogger(nameof(request));
-			logger.LogError($"{prefixMessage} Error: {ex?.Message + Environment.NewLine + ex?.InnerException?.Message}");
+            Log.Error($"{prefixMessage} Error: {ex?.Message + Environment.NewLine + ex?.InnerException?.Message}");
 			return new Result(false, $"{prefixMessage} Error: {ex?.Message + Environment.NewLine + ex?.InnerException?.Message}");
 		}
 
-		public static Result Failure<T>(string error)
+		public static Result Failure(string error)
 		{
-			ILogger logger = ApplicationLogging.CreateLogger<T>();
-			logger.LogError(error);
+            Log.Error(error);
 			return new Result(false, error);
 		}
 
 		public static Result Failure<T>(T request, string error)
 		{
-			ILogger logger = ApplicationLogging.CreateLogger<T>();
-			logger.LogError(error);
+            Log.Error(error);
 			return new Result(false, error);
 		}
 
-		public static Result Failure<T>(string prefixMessage, Exception ex)
+		public static Result Failure(string prefixMessage, Exception ex)
 		{
-			ILogger logger = ApplicationLogging.CreateLogger<T>();
-			logger.LogError($"{prefixMessage} Error: {ex?.Message + Environment.NewLine + ex?.InnerException?.Message}");
+            Log.Error($"{prefixMessage} Error: {ex?.Message + Environment.NewLine + ex?.InnerException?.Message}");
 			return new Result(false, $"{prefixMessage} Error: {ex?.Message + Environment.NewLine + ex?.InnerException?.Message}");
 		}
 
 		public static Result Failure<T>(T request, string prefixMessage, Exception ex)
 		{
-			ILogger logger = ApplicationLogging.CreateLogger<T>();
-			logger.LogError($"{prefixMessage} Error: {ex?.Message + Environment.NewLine + ex?.InnerException?.Message}");
+            Log.Error($"{prefixMessage} Error: {ex?.Message + Environment.NewLine + ex?.InnerException?.Message}");
 			return new Result(false, $"{prefixMessage} Error: {ex?.Message + Environment.NewLine + ex?.InnerException?.Message}");
 		}
 
 		public static Result Failure<T>(T request, object entity)
 		{
-			ILogger logger = ApplicationLogging.CreateLogger<T>();
-			logger.LogError($"Error: {DateTime.Now}");
+			Log.Error($"Error: {DateTime.Now}");
 			return new Result(false, entity);
 		}
 
 		public static Result Failure(Type request, object entity)
 		{
-			ILogger logger = ApplicationLogging.LoggerFactory.CreateLogger(nameof(request));
-			logger.LogError($"Error: {DateTime.Now}");
+            Log.Error($"Error: {DateTime.Now}");
 			return new Result(false, entity);
 		}
-		public static Result Failure<T>(object entity)
+		public static Result Failure(object entity)
 		{
-			ILogger logger = ApplicationLogging.CreateLogger<T>();
-			logger.LogError($"Error: {DateTime.Now}");
+			Log.Error($"Error: {DateTime.Now}");
 			return new Result(false, entity);
 		}
 	}

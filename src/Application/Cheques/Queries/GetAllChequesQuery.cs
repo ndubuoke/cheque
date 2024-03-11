@@ -26,9 +26,9 @@ namespace ChequeMicroservice.Application.Cheques.Queries
             List<Cheque> cheques = await _context.Cheques.ToListAsync(cancellationToken);
             if (cheques.Count == 0)
             {
-                return Result.Failure<GetAllChequesQuery>("No cheque records found");
+                return Result.Failure("No cheque records found");
             }
-            return Result.Success<GetAllChequesQuery>("Cheques retrieved successfully", cheques);
+            return Result.Success("Cheques retrieved successfully", cheques);
         }
     }
 }

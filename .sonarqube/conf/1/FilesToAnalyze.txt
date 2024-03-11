@@ -18,13 +18,10 @@ C:\Users\Oluchi\source\repos\cheque-ms\src\Application\Cheques\Queries\GetCheque
 C:\Users\Oluchi\source\repos\cheque-ms\src\Application\Common\Behaviours\PerformanceBehaviour.cs
 C:\Users\Oluchi\source\repos\cheque-ms\src\Application\Common\Behaviours\UnhandledExceptionBehaviour.cs
 C:\Users\Oluchi\source\repos\cheque-ms\src\Application\Common\Behaviours\ValidationBehavior.cs
-C:\Users\Oluchi\source\repos\cheque-ms\src\Application\Common\Exceptions\GlobalExceptionHandler.cs
 C:\Users\Oluchi\source\repos\cheque-ms\src\Application\Common\Exceptions\NotFoundException.cs
 C:\Users\Oluchi\source\repos\cheque-ms\src\Application\Common\Exceptions\ValidationException.cs
-C:\Users\Oluchi\source\repos\cheque-ms\src\Application\Common\Extensions\Extensions.cs
 C:\Users\Oluchi\source\repos\cheque-ms\src\Application\Common\Interfaces\IApiClientService.cs
 C:\Users\Oluchi\source\repos\cheque-ms\src\Application\Common\Interfaces\IApplicationDbContext.cs
-C:\Users\Oluchi\source\repos\cheque-ms\src\Application\Common\Interfaces\IApplicationDbContextHelper.cs
 C:\Users\Oluchi\source\repos\cheque-ms\src\Application\Common\Interfaces\IEmailService.cs
 C:\Users\Oluchi\source\repos\cheque-ms\src\Application\Common\Interfaces\IEnumService.cs
 C:\Users\Oluchi\source\repos\cheque-ms\src\Application\Common\Interfaces\IFileUploadService.cs

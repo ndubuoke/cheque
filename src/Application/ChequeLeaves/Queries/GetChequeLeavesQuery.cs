@@ -30,7 +30,7 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Queries
             List<ChequeLeaf> chequeLeaves = await _context.ChequeLeaves.Where(c => c.ChequeId == request.ChequeId).ToListAsync(cancellationToken);
             if (chequeLeaves.Count == 0)
             {
-                return Result.Failure<GetChequeLeavesQuery>("No cheque leaves record found");
+                return Result.Failure("No cheque leaves record found");
             }
             if (string.IsNullOrEmpty(request.SearchValue))
             {
@@ -38,9 +38,9 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Queries
             }
             if (request.Skip > 0 || request.Take > 0)
             {
-                return Result.Success<GetChequeLeavesQuery>("Cheque leaves retrieved successfully", chequeLeaves.Skip(request.Skip).Take(request.Take).ToList());
+                return Result.Success("Cheque leaves retrieved successfully", chequeLeaves.Skip(request.Skip).Take(request.Take).ToList());
             }
-            return Result.Success<GetChequeLeavesQuery>("Cheque leaves retrieved successfully", chequeLeaves);
+            return Result.Success("Cheque leaves retrieved successfully", chequeLeaves);
         }
     }
 }
