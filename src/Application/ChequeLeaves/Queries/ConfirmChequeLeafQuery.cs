@@ -25,9 +25,9 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Queries
             ChequeLeaf chequeLeaf = await _context.ChequeLeaves.FirstOrDefaultAsync(c => c.LeafNumber == request.LeafNumber,cancellationToken);
             if (chequeLeaf == null)
             {
-                return Result.Failure<GetChequeLeavesQuery>("No check leaf record found");
+                return Result.Failure("No check leaf record found");
             }
-            return Result.Success<GetChequeLeavesQuery>("Cheque leaf confirmed successfully", chequeLeaf);
+            return Result.Success("Cheque leaf confirmed successfully", chequeLeaf);
         }
     }
 }

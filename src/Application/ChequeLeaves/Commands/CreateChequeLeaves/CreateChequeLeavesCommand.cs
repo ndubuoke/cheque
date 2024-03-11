@@ -41,11 +41,11 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Commands
 
                 if (!isEndingSeriesNumber || !isStartingSeriesNumber)
                 {
-                    return Result.Failure<CreateChequeLeavesCommand>("An error occured while trying to create cheque leaves");
+                    return Result.Failure("An error occured while trying to create cheque leaves");
                 }
                 if (chequeStartingSeriesValue > chequeEndingSeriesValue)
                 {
-                    return Result.Failure<CreateChequeLeavesCommand>("An error occured while trying to create cheque leaves. Series not in appropriate order");
+                    return Result.Failure("An error occured while trying to create cheque leaves. Series not in appropriate order");
                 }
 
                 for (long leafNumber = chequeStartingSeriesValue; leafNumber <= chequeEndingSeriesValue; leafNumber++)
@@ -65,7 +65,7 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Commands
                 await _context.ChequeLeaves.AddRangeAsync(chequeLeaves, cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
                 await _context.CommitTransactionAsync();
-                return Result.Success<CreateChequeLeavesCommand>("Cheque leaves created successfully", chequeLeaves);
+                return Result.Success("Cheque leaves created successfully", chequeLeaves);
             }
             catch (Exception)
             {

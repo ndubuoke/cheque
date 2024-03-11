@@ -25,9 +25,9 @@ namespace ChequeMicroservice.Application.Cheques.Queries
             Cheque cheque = await _context.Cheques.FirstOrDefaultAsync(c => c.Id == request.ChequeId,cancellationToken);
             if (cheque == null)
             {
-                return Result.Failure<GetChequeByIdQuery>("No cheque record found");
+                return Result.Failure("No cheque record found");
             }
-            return Result.Success<GetChequeByIdQuery>("Cheque retrieved successfully", cheque);
+            return Result.Success("Cheque retrieved successfully", cheque);
         }
     }
 }

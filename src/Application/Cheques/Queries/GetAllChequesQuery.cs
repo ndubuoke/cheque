@@ -24,11 +24,11 @@ namespace ChequeMicroservice.Application.Cheques.Queries
         public async Task<Result> Handle(GetAllChequesQuery request, CancellationToken cancellationToken)
         {
             List<Cheque> cheques = await _context.Cheques.ToListAsync(cancellationToken);
-            if (!cheques.Any())
+            if (cheques == null || cheques.Count == 0)
             {
-                return Result.Failure<GetAllChequesQuery>("No cheque records found");
+                return Result.Failure("No cheque records found");
             }
-            return Result.Success<GetAllChequesQuery>("Cheques retrieved successfully", cheques);
+            return Result.Success("Cheques retrieved successfully", cheques);
         }
     }
 }

@@ -32,11 +32,11 @@ namespace ChequeMicroservice.Application.Cheques.CreateCheques
                 Cheque cheque = await _context.Cheques.FirstOrDefaultAsync(a => a.Id == request.ChequeId, cancellationToken);
                 if (cheque == null)
                 {
-                    return Result.Failure<CreateChequeCommand>("Invalid cheque id");
+                    return Result.Failure("Invalid cheque id");
                 }
                 if (cheque.ObjectCategory == ObjectCategory.Record)
                 {
-                    return Result.Failure<CreateChequeCommand>("Cheque already exists");
+                    return Result.Failure("Cheque already exists");
                 }
 
                 await new CreateChequeLeavesCommandHandler(_context).Handle(new CreateChequeLeavesCommand 
@@ -53,7 +53,7 @@ namespace ChequeMicroservice.Application.Cheques.CreateCheques
                 _context.Cheques.Update(cheque);
                 await _context.SaveChangesAsync(cancellationToken);
                 await _context.CommitTransactionAsync();
-                return Result.Success<CreateChequeCommand>("Cheque created successfully", cheque);
+                return Result.Success("Cheque created successfully", cheque);
             }
             catch (Exception)
             {
