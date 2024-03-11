@@ -384,3 +384,5 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+/src/API/appsettings.json
+/src/API/appsettings.Development.json
