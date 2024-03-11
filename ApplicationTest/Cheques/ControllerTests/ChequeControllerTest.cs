@@ -21,8 +21,6 @@ namespace Application.UnitTests.Cheques.ControllerTests
         {
             _mediatorMock = new Mock<IMediator>();
             _contextAccessorMock = new Mock<IHttpContextAccessor>();
-            mockHttpContext.Request.Headers.Authorization= "Bearer SampleAccessToken";
-            _contextAccessorMock.Setup(a => a.HttpContext).Returns(mockHttpContext);
         }
 
         [Test]
