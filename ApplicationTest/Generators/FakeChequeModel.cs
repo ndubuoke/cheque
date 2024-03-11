@@ -43,14 +43,19 @@ namespace Application.UnitTests.Generators
                     SeriesEndingNumber = "21A",
                     SeriesStartingNumber = "10",
                     NumberOfChequeLeaf = 10,
-                    ObjectCategory = ObjectCategory.Request,
-                    ObjectCategoryDesc = ObjectCategory.Request.ToString(),
+                    ObjectCategory = ObjectCategory.Record,
+                    ObjectCategoryDesc = ObjectCategory.Record.ToString(),
                     ChequeStatus = ChequeStatus.Initiated,
                     ChequeStatusDesc = ChequeStatus.Initiated.ToString(),
                     CreatedDate = DateTime.Now,
                     UserId = Guid.NewGuid().ToString()
                 }
             };
+        }
+
+        public static List<Cheque> GetEmptyChequeList()
+        {
+            return new List<Cheque>();
         }
     }
 }

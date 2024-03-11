@@ -34,5 +34,35 @@ namespace Application.UnitTests.Cheques.Commands
                 Assert.That(result.Message, Is.EqualTo("Cheque created successfully"));
             });
         }
+
+        [Test]
+        public async Task CreateChequeComand_InvalidCheque_Failure()
+        {
+            var handler = new CreateChequeCommandHandler(_contextMock.Object);
+            var result = await handler.Handle(new CreateChequeCommand
+            {
+                ChequeId = 13,
+                UserId = Guid.NewGuid().ToString()
+            }, CancellationToken.None);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Succeeded, Is.False);
+            });
+        }
+
+        [Test]
+        public async Task CreateChequeComand_InvalidChequeRecord_Failure()
+        {
+            var handler = new CreateChequeCommandHandler(_contextMock.Object);
+            var result = await handler.Handle(new CreateChequeCommand
+            {
+                ChequeId = 3,
+                UserId = Guid.NewGuid().ToString()
+            }, CancellationToken.None);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Succeeded, Is.False);
+            });
+        }
     }
 }
