@@ -27,46 +27,36 @@ namespace ChequeMicroservice.Application.Cheques.ApproveorRejectChequeRequests
         }
         public async Task<Result> Handle(ApproveorRejectChequeRequestCommand request, CancellationToken cancellationToken)
         {
-            try
+            Cheque cheque = await _context.Cheques.FirstOrDefaultAsync(a => a.Id == request.ChequeId, cancellationToken);
+            if (cheque == null)
             {
-                await _context.BeginTransactionAsync();
-                Cheque cheque = await _context.Cheques.FirstOrDefaultAsync(a => a.Id == request.ChequeId, cancellationToken);
-                if (cheque == null)
-                {
-                    return Result.Failure("Invalid cheque id");
-                }
-                if (cheque.ObjectCategory == ObjectCategory.Record)
-                {
-                    return Result.Failure("Cheque already exists");
-                }
-                if (request.IsApproved)
-                {
-                    var createChequeHandler = new CreateChequeCommandHandler(_context);
-                    var chequeForCreation = new CreateChequeCommand()
-                    {
-                        AccessToken = request.AccessToken,
-                        ChequeId = request.ChequeId,
-                        UserId = request.UserId,
-                    };
-                    var chequeEntity = await createChequeHandler.Handle(chequeForCreation, cancellationToken);
-                    if (chequeEntity.Succeeded)
-                    {
-                        return Result.Success("Cheque request approved successfully", cheque);
-                    }
-                }
-                cheque.ChequeStatus = ChequeStatus.Rejected;
-                cheque.LastModifiedDate = DateTime.UtcNow;
-                cheque.LastModifiedBy = request.UserId;
-                 _context.Cheques.Update(cheque);
-                await _context.SaveChangesAsync(cancellationToken);
-                await _context.CommitTransactionAsync();
-                return Result.Success("Cheque request rejected successfully", cheque);
+                return Result.Failure("Invalid cheque id");
             }
-            catch (Exception)
+            if (cheque.ObjectCategory == ObjectCategory.Record)
             {
-                _context.RollbackTransaction();
-                throw;
+                return Result.Failure("Cheque already exists");
             }
+            if (request.IsApproved)
+            {
+                var createChequeHandler = new CreateChequeCommandHandler(_context);
+                var chequeForCreation = new CreateChequeCommand()
+                {
+                    AccessToken = request.AccessToken,
+                    ChequeId = request.ChequeId,
+                    UserId = request.UserId,
+                };
+                var chequeEntity = await createChequeHandler.Handle(chequeForCreation, cancellationToken);
+                if (chequeEntity.Succeeded)
+                {
+                    return Result.Success("Cheque request approved successfully", cheque);
+                }
+            }
+            cheque.ChequeStatus = ChequeStatus.Rejected;
+            cheque.LastModifiedDate = DateTime.UtcNow;
+            cheque.LastModifiedBy = request.UserId;
+            _context.Cheques.Update(cheque);
+            await _context.SaveChangesAsync(cancellationToken);
+            return Result.Success("Cheque request rejected successfully", cheque);
         }
     }
 }

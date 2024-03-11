@@ -69,5 +69,21 @@ namespace Application.UnitTests.Cheques.Commands
                 Assert.That(result.Succeeded, Is.False);
             });
         }
+
+        [Test]
+        public async Task ActionChequeRequestCommand_AlreadyActionedRecord_ReturnFalse()
+        {
+            var handler = new ApproveorRejectChequeRequestCommandHandler(_contextMock.Object);
+            var result = await handler.Handle(new ApproveorRejectChequeRequestCommand
+            {
+                ChequeId = 3,
+                IsApproved = false,
+                UserId = Guid.NewGuid().ToString()
+            }, CancellationToken.None);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Succeeded, Is.False);
+            });
+        }
     }
 }

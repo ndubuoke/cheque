@@ -28,54 +28,31 @@ namespace ChequeMicroservice.Application.Cheques.CreateCheques
         }
         public async Task<Result> Handle(CreateChequeRequestCommand request, CancellationToken cancellationToken)
         {
-            try
+            Cheque existingCheque = await _context.Cheques.FirstOrDefaultAsync(a => a.SeriesStartingNumber == request.SeriesStartingNumber && a.SeriesEndingNumber == request.SeriesEndingNumber, cancellationToken);
+            if (existingCheque != null)
             {
-                await _context.BeginTransactionAsync();
-                Cheque existingCheque = await _context.Cheques.FirstOrDefaultAsync(a => a.SeriesStartingNumber == request.SeriesStartingNumber && a.SeriesEndingNumber == request.SeriesEndingNumber, cancellationToken);
-                if (existingCheque != null)
-                {
-                    if (existingCheque.SeriesStartingNumber == request.SeriesStartingNumber)
-                    {
-                        return Result.Failure("Cheque already exists with this series start date");
-                    }
-                    if (existingCheque.SeriesEndingNumber == request.SeriesEndingNumber)
-                    {
-                        return Result.Failure("Cheque already exists with this series end date");
-                    }
-                    if (existingCheque.ObjectCategory == ObjectCategory.Record)
-                    {
-                        return Result.Failure("Cheque already exists");
-                    }
-                    return Result.Failure("An active cheque already exist");
-                }
-              
-                Cheque newCheque = new Cheque
-                {
-                    ChequeStatus = ChequeStatus.Initiated,
-                    ChequeStatusDesc = ChequeStatus.Initiated.ToString(),
-                    ObjectCategory = ObjectCategory.Request,
-                    ObjectCategoryDesc = ObjectCategory.Request.ToString(),
-                    CreatedDate = DateTime.UtcNow,
-                    CreatedBy = request.UserId,
-                    SeriesEndingNumber = request.SeriesEndingNumber,
-                    SeriesStartingNumber = request.SeriesStartingNumber,
-                    IssueDate = request.IssueDate,
-                    NumberOfChequeLeaf = request.NumberOfChequeLeaf,
-                    Status = Status.Active,
-                    StatusDesc = Status.Active.ToString().ToString(),
-                    EntityId = "",//Get this from user id, we need a method to fetch user details and permissions
-                    BranchId = "" ,//Get this from user id, we need a method to fetch user details and permissions
-                };
-                await _context.Cheques.AddAsync(newCheque,cancellationToken);
-                await _context.SaveChangesAsync(cancellationToken);
-                await _context.CommitTransactionAsync();
-                return Result.Success("Cheque created successfully", newCheque);
+                return Result.Failure("An active cheque already exist");
             }
-            catch (Exception)
+            Cheque newCheque = new Cheque
             {
-                _context.RollbackTransaction();
-                throw;
-            }
+                ChequeStatus = ChequeStatus.Initiated,
+                ChequeStatusDesc = ChequeStatus.Initiated.ToString(),
+                ObjectCategory = ObjectCategory.Request,
+                ObjectCategoryDesc = ObjectCategory.Request.ToString(),
+                CreatedDate = DateTime.UtcNow,
+                CreatedBy = request.UserId,
+                SeriesEndingNumber = request.SeriesEndingNumber,
+                SeriesStartingNumber = request.SeriesStartingNumber,
+                IssueDate = request.IssueDate,
+                NumberOfChequeLeaf = request.NumberOfChequeLeaf,
+                Status = Status.Active,
+                StatusDesc = Status.Active.ToString().ToString(),
+                EntityId = "",//Get this from user id, we need a method to fetch user details and permissions
+                BranchId = "",//Get this from user id, we need a method to fetch user details and permissions
+            };
+            await _context.Cheques.AddAsync(newCheque, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+            return Result.Success("Cheque created successfully", newCheque);
         }
     }
 }

@@ -20,10 +20,6 @@ namespace API.Controllers
         {
             _httpContextAccessor = httpContextAccessor;
             accessToken = _httpContextAccessor.HttpContext.Request.Headers.Authorization.ToString();
-            if (accessToken == null)
-            {
-                throw new UnauthorizedAccessException("You are not authorized!");
-            }
         }
 
         /// <summary>
@@ -34,6 +30,10 @@ namespace API.Controllers
         [HttpPost("createchequerequest")]
         public async Task<ActionResult> CreateChequeRequest(CreateChequeRequestCommand command)
         {
+            if (string.IsNullOrEmpty(accessToken))
+            {
+                return BadRequest("You are not authorized!");
+            }
             command.AccessToken = accessToken;
             Result createdChequeRequest = await Mediator.Send(command);
             return Ok(createdChequeRequest);
@@ -48,6 +48,10 @@ namespace API.Controllers
         [HttpPost("approveorrejectchequerequest")]
         public async Task<ActionResult> ApproveorRejectChequeRequest(ApproveorRejectChequeRequestCommand command)
         {
+            if (string.IsNullOrEmpty(accessToken))
+            {
+                return BadRequest("You are not authorized!");
+            }
             command.AccessToken = accessToken;
             Result approveOrRejectResponse = await Mediator.Send(command);
             return Ok(approveOrRejectResponse);
@@ -61,6 +65,10 @@ namespace API.Controllers
         [HttpGet("getchequebyid/{chequeId}")]
         public async Task<ActionResult> GetChequeById(int chequeId)
         {
+            if (string.IsNullOrEmpty(accessToken))
+            {
+                return BadRequest("You are not authorized!");
+            }
             Result result = await Mediator.Send(new GetChequeByIdQuery { ChequeId = chequeId });
             return Ok(result);
         }
@@ -72,6 +80,10 @@ namespace API.Controllers
         [HttpGet("getchequelist")]
         public async Task<ActionResult> GetChequeList()
         {
+            if (string.IsNullOrEmpty(accessToken))
+            {
+                return BadRequest("You are not authorized!");
+            }
             Result result = await Mediator.Send(new GetAllChequesQuery());
             return Ok(result);
         }

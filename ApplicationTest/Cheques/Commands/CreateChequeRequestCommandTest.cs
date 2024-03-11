@@ -37,5 +37,25 @@ namespace Application.UnitTests.Cheques.Commands
                 Assert.That(result.Message, Is.EqualTo("Cheque created successfully"));
             });
         }
+
+        [Test]
+        public async Task CreateChequeRequestComand_ExistingSeriesNumbers_Failure()
+        {
+            var handler = new CreateChequeRequestCommandHandler(_contextMock.Object);
+            var result = await handler.Handle(new CreateChequeRequestCommand
+            {
+                NumberOfChequeLeaf = 1,
+                IssueDate = DateTime.Now,
+                SeriesEndingNumber = "21",
+                SeriesStartingNumber = "10",
+                UserId = Guid.NewGuid().ToString()
+            }, CancellationToken.None);
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Succeeded, Is.False);
+                Assert.That(result.Entity, Is.Null);
+                Assert.That(result.Message, Is.EqualTo("An active cheque already exist"));
+            });
+        }
     }
 }
