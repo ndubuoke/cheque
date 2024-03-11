@@ -1,9 +1,0 @@
-﻿C:\Users\Oluchi\source\repos\cheque-ms\src\Domain\Common\BaseEntity.cs
-C:\Users\Oluchi\source\repos\cheque-ms\src\Domain\Entities\AuditTrail.cs
-C:\Users\Oluchi\source\repos\cheque-ms\src\Domain\Entities\Cheque.cs
-C:\Users\Oluchi\source\repos\cheque-ms\src\Domain\Entities\ChequeLeaf.cs
-C:\Users\Oluchi\source\repos\cheque-ms\src\Domain\Enums\AuditAction.cs
-C:\Users\Oluchi\source\repos\cheque-ms\src\Domain\Enums\ChequeLeafStatus.cs
-C:\Users\Oluchi\source\repos\cheque-ms\src\Domain\Enums\ChequeStatus.cs
-C:\Users\Oluchi\source\repos\cheque-ms\src\Domain\Enums\ObjectCategory.cs
-C:\Users\Oluchi\source\repos\cheque-ms\src\Domain\Enums\Status.cs

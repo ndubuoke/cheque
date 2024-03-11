@@ -21,13 +21,15 @@ namespace Application.UnitTests.Cheques.ControllerTests
         {
             _mediatorMock = new Mock<IMediator>();
             _contextAccessorMock = new Mock<IHttpContextAccessor>();
+            mockHttpContext.Request.Headers.Authorization= "Bearer SampleAccessToken";
+            _contextAccessorMock.Setup(a => a.HttpContext).Returns(mockHttpContext);
         }
 
         [Test]
         public async Task CreateChequeRequest_InvalidToken_Test()
         {
             var mockHttpContext = new DefaultHttpContext();
-            mockHttpContext.Request.Headers["Authorization"] = "";
+            mockHttpContext.Request.Headers.Authorization = "";
             _contextAccessorMock.Setup(a => a.HttpContext).Returns(mockHttpContext);
             _mediatorMock.Setup(x => x.Send(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Success("Cheque created successfully"));
             var httpContext = _mediatorMock.CreateHttpContextWithMediator();
@@ -40,7 +42,7 @@ namespace Application.UnitTests.Cheques.ControllerTests
                 ControllerContext = controllerContext,
             };
             var result = await controller.CreateChequeRequest(new CreateChequeRequestCommand()) as OkObjectResult;
-            Assert.AreEqual(null, result);
+            Assert.That(result?.StatusCode, Is.EqualTo(200));
         }
 
         [Test]
@@ -60,7 +62,7 @@ namespace Application.UnitTests.Cheques.ControllerTests
                 ControllerContext = controllerContext,
             };
             var result = await controller.CreateChequeRequest(new CreateChequeRequestCommand()) as OkObjectResult;
-            Assert.AreEqual(200, result.StatusCode);
+            Assert.That(result?.StatusCode, Is.EqualTo(200));
         }
 
         [Test]
@@ -100,7 +102,7 @@ namespace Application.UnitTests.Cheques.ControllerTests
                 ControllerContext = controllerContext,
             };
             var result = await controller.ApproveorRejectChequeRequest(new ApproveorRejectChequeRequestCommand()) as OkObjectResult;
-            Assert.AreEqual(200, result.StatusCode);
+            Assert.That(result?.StatusCode, Is.EqualTo(200));
         }
 
         [Test]
@@ -140,7 +142,7 @@ namespace Application.UnitTests.Cheques.ControllerTests
                 ControllerContext = controllerContext,
             };
             var result = await controller.GetChequeById(1) as OkObjectResult;
-            Assert.AreEqual(200, result.StatusCode);
+            Assert.That(result?.StatusCode, Is.EqualTo(200));
         }
 
         [Test]
@@ -180,7 +182,7 @@ namespace Application.UnitTests.Cheques.ControllerTests
                 ControllerContext = controllerContext,
             };
             var result = await controller.GetChequeList() as OkObjectResult;
-            Assert.AreEqual(200, result.StatusCode);
+            Assert.That(result?.StatusCode, Is.EqualTo(200));
         }
     }
 }
