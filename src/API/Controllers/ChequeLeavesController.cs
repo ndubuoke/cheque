@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ChequeLeavesController : ApiController
     {
         protected readonly IHttpContextAccessor _httpContextAccessor;

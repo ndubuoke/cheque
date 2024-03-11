@@ -12,7 +12,7 @@ using ChequeMicroservice.Application.Cheques.Queries;
 
 namespace API.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+   // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ChequesController : ApiController
     {
         protected readonly IHttpContextAccessor _httpContextAccessor;
