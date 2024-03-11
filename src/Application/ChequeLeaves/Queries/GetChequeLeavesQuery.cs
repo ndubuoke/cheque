@@ -32,7 +32,7 @@ namespace ChequeMicroservice.Application.ChequeLeaves.Queries
             {
                 return Result.Failure<GetChequeLeavesQuery>("No cheque leaves record found");
             }
-            if (string.IsNullOrEmpty(request.SearchValue))
+            if (!string.IsNullOrEmpty(request.SearchValue))
             {
                 chequeLeaves = chequeLeaves.Where(c => c.LeafNumber.Contains(request.SearchValue)).ToList();
             }
