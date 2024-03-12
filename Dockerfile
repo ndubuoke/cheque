@@ -24,9 +24,10 @@ FROM base AS final
 WORKDIR /app
 EXPOSE 8080
 
-# Create a non-root user
-RUN adduser --disabled-password --gecos '' appuser && \
-    chown -R appuser /app
+# Create a non-root user with specific UID and GID
+RUN groupadd -r appgroup && \
+    useradd -r -u 1001 -g appgroup appuser && \
+    chown -R appuser:appgroup /app
 USER appuser
 
 COPY --from=build /app/publish .
