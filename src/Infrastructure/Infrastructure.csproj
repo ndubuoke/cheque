@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Persistence\Configurations\**" />
+    <Compile Remove="Migrations\**" />
     <Compile Remove="Repository\**" />
-    <EmbeddedResource Remove="Persistence\Configurations\**" />
+	<EmbeddedResource Remove="Migrations\**" />
     <EmbeddedResource Remove="Repository\**" />
-    <None Remove="Persistence\Configurations\**" />
+	<None Remove="Migrations\**" />
     <None Remove="Repository\**" />
   </ItemGroup>
 

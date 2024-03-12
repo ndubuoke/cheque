@@ -16,6 +16,8 @@
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	  <DebugType>embedded</DebugType>
 	</PropertyGroup>
+	
+
 
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="13.0.1" />

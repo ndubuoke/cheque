@@ -1,6 +1,3 @@
 ﻿C:\Users\Oluchi\source\repos\cheque-ms\src\Infrastructure\DependencyInjection.cs
-C:\Users\Oluchi\source\repos\cheque-ms\src\Infrastructure\Migrations\20240311101320_addmigrationforlocaldb.cs
-C:\Users\Oluchi\source\repos\cheque-ms\src\Infrastructure\Migrations\20240311101320_addmigrationforlocaldb.Designer.cs
-C:\Users\Oluchi\source\repos\cheque-ms\src\Infrastructure\Migrations\ApplicationDbContextModelSnapshot.cs
 C:\Users\Oluchi\source\repos\cheque-ms\src\Infrastructure\Persistence\ApplicationDbContext.cs
 C:\Users\Oluchi\source\repos\cheque-ms\src\Infrastructure\Services\ApiClientService.cs
