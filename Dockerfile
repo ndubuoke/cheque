@@ -5,9 +5,9 @@ COPY ["/src/Application/Application.csproj", "/src/Application/"]
 COPY ["/src/Domain/Domain.csproj", "/src/Domain/"]
 COPY ["/src/Infrastructure/Infrastructure.csproj", "/src/Infrastructure/"]
 
-RUN dotnet restore "/src/API/API.csproj"
-
 WORKDIR /src/API
+
+RUN dotnet restore "/src/API/API.csproj"
 
 RUN dotnet build "API.csproj" -c Release -o /app/build
 RUN dotnet publish "API.csproj" -c Release -o /app/publish
