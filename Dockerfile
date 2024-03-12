@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
 COPY ["/src/API/API.csproj", "/src/API/"]
 COPY ["/src/Application/Application.csproj", "/src/Application/"]
@@ -12,7 +12,7 @@ WORKDIR /src/API
 RUN dotnet build "API.csproj" -c Release -o /app/build
 RUN dotnet publish "API.csproj" -c Release -o /app/publish
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS final
 WORKDIR /app
 EXPOSE 8080
 
